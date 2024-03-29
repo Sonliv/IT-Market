@@ -1,0 +1,159 @@
+
+@import '../reset.scss';
+
+
+
+
+.cart{
+
+    &-page{
+        margin-top: 140px;
+    }
+
+    &-title{
+        margin-bottom: 40px;
+        font-size: $fz-big ;
+    }
+
+    &-wrapper{
+
+        width: 70%;
+
+        // width: 100%;
+
+        //  border-radius: 16px;
+        //  box-shadow: 0 8px 24px 0 #0b0c0e14;;
+
+        //  margin-bottom: 32px;
+        //  padding: 22px;
+    }
+
+    &-item{
+        display: flex;
+        align-items: center;
+        gap: 30px;
+
+        // height: 120px;
+
+        border-bottom: 1px solid #e1e1e1;
+        padding-bottom: 24px;
+        margin-bottom: 24px;
+
+        & img{
+            height: 100px;
+        }
+
+        &-info{
+            &-title{
+                margin-bottom: 10px;
+            }
+        }
+
+        &-buttons{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            & img{
+                width: 25px;
+                height: 25px;
+            }
+        }
+    }
+
+    &-container{
+        width: 100%;
+
+        border-radius: 16px;
+        box-shadow: 0 8px 24px 0 #0b0c0e14;;
+
+        margin-bottom: 32px;
+        padding: 22px;
+
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &-total{
+
+        width: 22%;
+
+        &-info{
+            display: flex;
+            justify-content: space-between;
+
+            margin-bottom: 30px;
+
+            font-weight: 500;
+            font-size: $fz-medium ;
+        }
+    }
+}
+
+
+
+
+@media(max-width: 1024px){
+
+    .cart{
+
+        &-wrapper{
+            width: 55%;
+        }
+
+        &-total{
+            width: 30%;
+        }
+    }
+}
+
+@media(max-width: 930px){
+
+    .cart{
+        
+        &-page{
+            margin-top: 200px;
+        }
+    }
+
+}
+
+
+@media(max-width: 768px){
+
+    .cart{
+
+        &-container{
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        &-wrapper{
+            width: 100%;
+        }
+
+        &-total{
+            width: 100%;
+        }
+    }
+}
+
+
+
+@media(max-width: 425px ){
+
+    .cart{
+
+        &-item img {
+            height: 50px;
+        }
+        
+        &-item-buttons img{
+            height: 25px;
+        }
+
+        &-item-info{
+            font-size: $fz-small;
+        }
+    }
+}
