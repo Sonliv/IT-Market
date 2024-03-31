@@ -6,7 +6,8 @@ import favoriteImg from '/favorite.svg'
 import './Header.scss';
 
 // import { Routes, Route, Link } from 'react-router-dom';
-import CartPage from '../../Pages/CartPage';
+// import CartPage from '../../Pages/CartPage';
+import CartPage from '../../Pages/CartPage/CartPage';
 import { Link } from 'react-router-dom';
 
 
@@ -38,10 +39,10 @@ const Header = () => {
                             <img src={cartImg} alt="" />
                             <span>Корзина</span>
                         </Link>
-                        <a href="CartPage" className="header-buttons-item">
+                        <Link to="/LoginPage" className="header-buttons-item">
                             <img src={userImg} alt="" />
                             <span>Имя</span>
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>

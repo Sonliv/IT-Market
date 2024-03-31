@@ -5,7 +5,10 @@ import './CartPage.scss'
 import favorite from '/favorite.svg'
 import garbage from '/garbage.png'
 import book from '/book.webp'
-import BaseBtn from '../Components/Base/BaseBtn/BaseBtn'
+// import BaseBtn from '../../Components/Base/BaseBtn/BaseBtn'
+import BaseBtn from '../../Components/Base/BaseBtn/BaseBtn'
+
+import {Link} from 'react-router-dom'
 
 
 function CartItem(){
@@ -40,7 +43,9 @@ const CartPage = () => {
                             <span className="cart-total-info-text">Итого:</span>
                             <span className="cart-total-info-sum">624 ₽</span>
                         </div>
-                        <BaseBtn BtnText="Оформить заказ" />
+                        <Link to="/loginPage">
+                          <BaseBtn BtnText="Оформить заказ" />
+                        </Link>
                      </div>
                 </div>
             </div>
