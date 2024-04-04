@@ -1,47 +1,83 @@
-
-
 import './LoginPage.scss'
+
 import { createClient } from '@supabase/supabase-js';
 import { Auth }  from '@supabase/auth-ui-react'
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ThemeSupa } from '@supabase/auth-ui-shared';
+// import {Auth} from '@supabase/auth-ui-react';
+
+
 
 const supabase = createClient(
-    'https://poprpfzqyzbmsbhtvvjw.supabase.co',
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBvcHJwZnpxeXpibXNiaHR2dmp3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTE3MDYzMTEsImV4cCI6MjAyNzI4MjMxMX0.wMh3igzPTekhCkRSWyknGW2YEJII8JJH_8PvYnu3hXo'
-    )
-    ;
+    'https://poprpfzqyzbmsbhtvvjw.supabase.co', // Supabase URL
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBvcHJwZnpxeXpibXNiaHR2dmp3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTE3MDYzMTEsImV4cCI6MjAyNzI4MjMxMX0.wMh3igzPTekhCkRSWyknGW2YEJII8JJH_8PvYnu3hXo' // API Key
+);
+
+
 
 const LoginPage = () => {
-    const navigate = useNavigate();
 
-    useEffect(() => {
-        const onAuthStateChange = (event) => {
-            if (event !== "SUGNED_OUT") {
-                // Forward to success url
-                navigate("/SuccessLogin")
-            } else {
-                // Forward to localHost
-                navigate ("/")
-            }
-        };
+    const navigate = useNavigate()
 
-        // Подписываемся на события аутентификации при монтировании компонента
-        supabase.auth.onAuthStateChange(onAuthStateChange);
-
-        // Отписываемся от событий при размонтировании компонента
-        return () => {
-            supabase.auth.removeSubscription(onAuthStateChange);
-        };
-    }, [navigate]);
+    supabase.auth.onAuthStateChange(async (event, session) => {
+        if (session) {
+            // Forward to success url
+            navigate("/SuccessLogin")
+        }
+    })
 
     return (
         <div className="first-element">
-            <Auth
+            <div className="auth">
+                <Auth
                 supabaseClient={supabase}
+                appearance={{theme: ThemeSupa}}
                 theme='dark'
                 providers={['discord']}
-            />
+                localization={{
+                    variables: {
+                      sign_in: {
+                        email_label: 'Введите адрес вашей почты',
+                        password_label: 'Введите пароль',
+                        email_input_placeholder: 'Ваша почта',
+                        password_input_placeholder: 'Ваш пароль',
+                        loading_button_label: 'Входим',
+                        social_provider_text: 'Войти с  {{provider}}',
+                        link_text: 'Нет аккаунта? Зарегистрируйтесь',
+                        confirmation_text: 'Проверьте вашу почту для подтверждения',
+                        button_label: 'Войти',
+                        // button_label: '',
+                        // button_label: '',
+                      },
+                      sign_up: {
+                        email_label: 'Введите адрес вашей почты',
+                        password_label: 'Введите пароль',
+                        email_input_placeholder: 'Ваша почта',
+                        password_input_placeholder: 'Ваш пароль',
+                        loading_button_label: 'Входим',
+                        social_provider_text: 'Зарегистрироваться с  {{provider}}',
+                        link_text: 'Есть аккаунт? Войдите',
+                        confirmation_text: 'Проверьте вашу почту для подтверждения',
+                        button_label: 'Зарегистрироваться',
+                        // button_label: '',
+                        // button_label: '',
+                      },
+                      forgotten_password: {
+                        email_label: 'Введите адрес вашей почты',
+                        password_label: 'Введите пароль',
+                        email_input_placeholder: 'Ваша почта',
+                        password_input_placeholder: 'Ваш пароль',
+                        button_label: 'Отправить письмо для подтверждения',
+                        loading_button_label: 'Отправка письма со сбросом пароля',
+                        link_text: 'Забыли ваш пароль?',
+                        confirmation_text: 'Проверьте вашу почту для сброса пароля',
+                        // button_label: '',
+                        // button_label: '',
+                      },
+                    },
+                  }}
+                />
+            </div>
         </div>
     );
 }

@@ -1,3 +1,19 @@
 
 
-@import '../../reset.scss'
+@import '../../reset.scss';
+
+
+.auth{
+    max-width: 50%;
+    margin: 0 auto;
+    // background-color: rgb(11, 16, 30);
+    background-color: #292C35;
+    padding: 40px 20px;
+    border-radius: $border;
+}
+
+@media(max-width: 926px){
+    .auth{
+        max-width: 100%;
+    }
+}
