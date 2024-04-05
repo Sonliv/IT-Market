@@ -31,6 +31,7 @@ const SuccessLogin = () => {
     }, []);
 
     async function signOutUser(){
+        // eslint-disable-next-line no-unused-vars
         const { error } = await supabase.auth.signOut();
         navigate("/");
     }
@@ -39,13 +40,17 @@ const SuccessLogin = () => {
         <div>
             { Object.keys(user).length !== 0 ?
                     <>
-                        <div className='first-element'>Success</div>
+                    <div className='first-element info-success' >
+                        <div>Success</div>
                         <button onClick={() => signOutUser()} >Выйти</button>
+                    </div>
                     </>
                     :
                     <>
+                    <div className="fist-element info-success">
                         <div className='first-element'>Вы не вошли в систему.</div>
                         <button onClick={() => {navigate ("/") }} >На главную</button>
+                    </div>
                     </>
             } 
         </div>

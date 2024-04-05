@@ -33,7 +33,7 @@ const LoginPage = () => {
                 supabaseClient={supabase}
                 appearance={{theme: ThemeSupa}}
                 theme='dark'
-                providers={['discord']}
+                providers={['discord', 'google']}
                 localization={{
                     variables: {
                       sign_in: {
@@ -46,8 +46,6 @@ const LoginPage = () => {
                         link_text: 'Нет аккаунта? Зарегистрируйтесь',
                         confirmation_text: 'Проверьте вашу почту для подтверждения',
                         button_label: 'Войти',
-                        // button_label: '',
-                        // button_label: '',
                       },
                       sign_up: {
                         email_label: 'Введите адрес вашей почты',
@@ -59,8 +57,6 @@ const LoginPage = () => {
                         link_text: 'Есть аккаунт? Войдите',
                         confirmation_text: 'Проверьте вашу почту для подтверждения',
                         button_label: 'Зарегистрироваться',
-                        // button_label: '',
-                        // button_label: '',
                       },
                       forgotten_password: {
                         email_label: 'Введите адрес вашей почты',
@@ -71,7 +67,6 @@ const LoginPage = () => {
                         loading_button_label: 'Отправка письма со сбросом пароля',
                         link_text: 'Забыли ваш пароль?',
                         confirmation_text: 'Проверьте вашу почту для сброса пароля',
-                        // button_label: '',
                         // button_label: '',
                       },
                     },
