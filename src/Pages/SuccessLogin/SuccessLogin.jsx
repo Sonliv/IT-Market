@@ -41,7 +41,7 @@ const SuccessLogin = () => {
             { Object.keys(user).length !== 0 ?
                     <>
                     <div className='first-element info-success' >
-                        <div>Success</div>
+                        <div>Вы вошли в свою учетную запись!</div>
                         <button onClick={() => signOutUser()} >Выйти</button>
                     </div>
                     </>
