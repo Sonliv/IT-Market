@@ -5,6 +5,7 @@ import Header from './Components/Header/Header';
 import Footer from './Components/Footer/Footer';
 import LoginPage from './Pages/LoginPage/LoginPage';
 import SuccessLogin from './Pages/SuccessLogin/SuccessLogin';
+import AddProduct from './Pages/AddProduct/AddProduct';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/CartPage" element={<CartPage />} />
           <Route path = "/LoginPage" element = {<LoginPage/>} />
           <Route path = "/SuccessLogin" element = {<SuccessLogin/>} />
+          <Route path = "/AddProduct" element = {<AddProduct/>} />
         </Routes>
       </div>
       <div className="footer-bottom">

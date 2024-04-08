@@ -1,0 +1,21 @@
+
+@import '../../reset.scss';
+
+.add-product{
+    &-wrapper{
+        border: 1px solid;
+        padding: 20px;
+        border-radius: $border;
+
+        & input, textarea{
+            margin-bottom: 20px;
+            border: 1px solid;
+            border-radius: 6px;
+            padding: 10px;
+        }
+        & label{
+            display: block;
+            margin-bottom: 10px;
+        }
+    }
+}
