@@ -29,19 +29,19 @@ const supabase = createClient(
 
 
 
-// function ProductItem(props){
-//     return(
-//         <div className="product-item">
-//             <div className="product-item-img-wrapper">
-//               <img className='product-item-img' src={props.cardImg} alt="" />
-//             </div>
-//             <h3 className="product-item-title">{props.cardTitle}</h3>
-//             <p className="product-item-desc">{props.cardDesc}</p>
-//             <p className="product-item-cost">{props.cardCost}</p>
-//             <button className="product-item-btn">В корзину</button>
-//         </div>
-//     );
-// }
+function ProductItem(props){
+    return(
+        <div className="product-item">
+            <div className="product-item-img-wrapper">
+              <img className='product-item-img' src={props.cardImg} alt="" />
+            </div>
+            <h3 className="product-item-title">{props.cardTitle}</h3>
+            <p className="product-item-desc">{props.cardDesc}</p>
+            <p className="product-item-cost">{props.cardCost}</p>
+            <button className="product-item-btn">В корзину</button>
+        </div>
+    );
+}
 
 
 
@@ -75,7 +75,7 @@ const Product = () => {
     useEffect(() => {
       const fetchProductFilm = async () => {
         const { data, error } = await supabase
-        .from('product_film')
+        .from('productFilm')
         .select()
 
         if (error) {
@@ -101,96 +101,84 @@ const Product = () => {
                      <ProductNavButtons buttonClassLeft="button-prev-1" buttonClassRight="button-next-1"/>
                 </div>
                 <div className="product-wrapper">
-                <Swiper className='product-swiper'
+                {productFilm && (
+                  <Swiper className='product-swiper'
                     spaceBetween={20}
-                    slidesPerView={1.5}
+                    slidesPerView={1}
                     loop={true}
                     onSlideChange={() => console.log('slide change')}
                     onSwiper={(swiper) => console.log(swiper)}
                     navigation={{
-                        prevEl: ".button-prev-1",
-                        nextEl: ".button-next-1"
+                      prevEl: ".button-prev-1",
+                      nextEl: ".button-next-1"
                     }}
                     modules={[Navigation, Autoplay]}
                     pagination={{
-                        clickable: true,
-                      }}
-                      breakpoints={{
-                        350: {
-                            slidesPerView: 1.5,
-                          },
-                          400: {
-                            slidesPerView: 2,
-                            slidesPerGroup: 1,
-                          },
-                          500: {
-                            slidesPerView: 2.3,
-                            slidesPerGroup: 1,
-                          },
-                          600: {
-                            slidesPerView: 2.8,
-                            slidesPerGroup: 2,
-                          },
-                          700: {
-                            slidesPerView: 3.3,
-                            slidesPerGroup: 2,
-                          },
-                          800: {
-                            slidesPerView: 3.5,
-                            slidesPerGroup: 2,
-                          },
-                          900: {
-                            slidesPerView: 3.8,
-                            slidesPerGroup: 2,
-                          },
-                          1000: {
-                            slidesPerView: 4.3,
-                            slidesPerGroup: 2,
-                          },
-                          1100: {
-                            slidesPerView: 4.6,
-                            slidesPerGroup: 2,
-                          },
-                          1200: {
-                            slidesPerView: 5,
-                            slidesPerGroup: 2,
-                          },
-                          1300: {
-                            slidesPerView: 5.5,
-                            slidesPerGroup: 3,
-                          },
-                      }}
-                    >
-                    {/* <SwiperSlide> <ProductItem cardImg={yaPlus} cardTitle="Яндекс плюс на год" cardDesc="Персональная подписка Яндекс плюс" cardCost="2820 ₽"/></SwiperSlide> */}
-                    <SwiperSlide>
-                      {/* {fetchError && ( <p>{fetchError}</p> )}
-                      {fetchProductFilm && (
-                        <div>
-                          {fetchProductFilm.map(ProductFilm => (
-                            <p>{fetchProductFilm.product_film_title}</p>
-                          ))}
+                      clickable: true,
+                    }}
+                    breakpoints={{
+                      350: {
+                        slidesPerView: 1.5,
+                      },
+                      400: {
+                        slidesPerView: 2,
+                        slidesPerGroup: 1,
+                      },
+                      500: {
+                        slidesPerView: 2.3,
+                        slidesPerGroup: 1,
+                      },
+                      600: {
+                        slidesPerView: 2.8,
+                        slidesPerGroup: 2,
+                      },
+                      700: {
+                        slidesPerView: 3.3,
+                        slidesPerGroup: 2,
+                      },
+                      800: {
+                        slidesPerView: 3.5,
+                        slidesPerGroup: 2,
+                      },
+                      900: {
+                        slidesPerView: 3.8,
+                        slidesPerGroup: 2,
+                      },
+                      1000: {
+                        slidesPerView: 4.3,
+                        slidesPerGroup: 2,
+                      },
+                      1100: {
+                        slidesPerView: 4.6,
+                        slidesPerGroup: 2,
+                      },
+                      1200: {
+                        slidesPerView: 5,
+                        slidesPerGroup: 2,
+                      },
+                      1300: {
+                        slidesPerView: 5.5,
+                        slidesPerGroup: 3,
+                      },
+                    }}
+                  >
+                    {productFilm.map((film, index) => (
+                      <SwiperSlide key={index}>
+                        <div className="product-item">
+                          <div className="product-item">
+                            <div className="product-item-img-wrapper">
+                              <img className='product-item-img' src={yaPlus} alt="" />
+                            </div>
+                            <h3 className="product-item-title">{film.productFilmTitle}</h3>
+                            <p className="product-item-desc">{film.product_film_desc}</p>
+                            <p className="product-item-cost">{film.product_film_cost} ₽</p>
+                            <button className="product-item-btn">В корзину</button>
                         </div>
-                      ) } */}
-
-                        {/* {fetchError && <p>{fetchError}</p>}
-                        {productFilm && (
-                          <div>
-                            {productFilm.map(ProductFilm => (
-                              <p>{ProductFilm.product_film_title}</p>
-                            ))}
-                          </div>
-                        )} */}
-                        {/* {fetchError && (<p>{fetchError}</p>)}
-                        {productFilm && (
-                          <div>
-                            {productFilm.map(product => (
-                              <p>{productFilm.product_film_title}</p>
-                            ))}
-                          </div>
-                        )}
-                        {console.log(productFilm)} */}
-                    </SwiperSlide>
-                 </Swiper>
+                        </div>
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
+                )}
                 </div>
                     <div className="product-nav">
                         <h2 className="product-nav-title">Книги</h2>
@@ -326,17 +314,8 @@ const Product = () => {
                       }}
                     >
                     {/* <SwiperSlide> <ProductItem cardImg={game} cardTitle="Spider-man 2" cardDesc="Код активации от игры" cardCost="5200 ₽" /></SwiperSlide> */}
-                    {/* <SwiperSlide> <ProductItem cardImg={game} cardTitle="Spider-man 2" cardDesc="Код активации от игры" cardCost="5200 ₽" /></SwiperSlide>
                     <SwiperSlide> <ProductItem cardImg={game} cardTitle="Spider-man 2" cardDesc="Код активации от игры" cardCost="5200 ₽" /></SwiperSlide>
                     <SwiperSlide> <ProductItem cardImg={game} cardTitle="Spider-man 2" cardDesc="Код активации от игры" cardCost="5200 ₽" /></SwiperSlide>
-                    <SwiperSlide> <ProductItem cardImg={game} cardTitle="Spider-man 2" cardDesc="Код активации от игры" cardCost="5200 ₽" /></SwiperSlide>
-                    <SwiperSlide> <ProductItem cardImg={game} cardTitle="Spider-man 2" cardDesc="Код активации от игры" cardCost="5200 ₽" /></SwiperSlide>
-                    <SwiperSlide> <ProductItem cardImg={game} cardTitle="Spider-man 2" cardDesc="Код активации от игры" cardCost="5200 ₽" /></SwiperSlide>
-                    <SwiperSlide> <ProductItem cardImg={game} cardTitle="Spider-man 2" cardDesc="Код активации от игры" cardCost="5200 ₽" /></SwiperSlide>
-                    <SwiperSlide> <ProductItem cardImg={game} cardTitle="Spider-man 2" cardDesc="Код активации от игры" cardCost="5200 ₽" /></SwiperSlide>
-                    <SwiperSlide> <ProductItem cardImg={game} cardTitle="Spider-man 2" cardDesc="Код активации от игры" cardCost="5200 ₽" /></SwiperSlide>
-                    <SwiperSlide> <ProductItem cardImg={game} cardTitle="Spider-man 2" cardDesc="Код активации от игры" cardCost="5200 ₽" /></SwiperSlide>
-                    <SwiperSlide> <ProductItem cardImg={game} cardTitle="Spider-man 2" cardDesc="Код активации от игры" cardCost="5200 ₽" /></SwiperSlide> */}
                  </Swiper>
                 </div>
             </div>
