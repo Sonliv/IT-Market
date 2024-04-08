@@ -171,7 +171,7 @@ const Product = () => {
                             </div>
                             <h3 className="product-item-title">{film.productFilmTitle}</h3>
                             <p className="product-item-desc">{film.product_film_desc}</p>
-                            <p className="product-item-cost">{film.product_film_cost} ₽</p>
+                            <p className="product-item-cost">{film.product_film_cost} Р</p>
                             <button className="product-item-btn">В корзину</button>
                         </div>
                         </div>
@@ -314,6 +314,10 @@ const Product = () => {
                       }}
                     >
                     {/* <SwiperSlide> <ProductItem cardImg={game} cardTitle="Spider-man 2" cardDesc="Код активации от игры" cardCost="5200 ₽" /></SwiperSlide> */}
+                    <SwiperSlide> <ProductItem cardImg={game} cardTitle="Spider-man 2" cardDesc="Код активации от игры" cardCost="5200 ₽" /></SwiperSlide>
+                    <SwiperSlide> <ProductItem cardImg={game} cardTitle="Spider-man 2" cardDesc="Код активации от игры" cardCost="5200 ₽" /></SwiperSlide>
+                    <SwiperSlide> <ProductItem cardImg={game} cardTitle="Spider-man 2" cardDesc="Код активации от игры" cardCost="5200 ₽" /></SwiperSlide>
+                    <SwiperSlide> <ProductItem cardImg={game} cardTitle="Spider-man 2" cardDesc="Код активации от игры" cardCost="5200 ₽" /></SwiperSlide>
                     <SwiperSlide> <ProductItem cardImg={game} cardTitle="Spider-man 2" cardDesc="Код активации от игры" cardCost="5200 ₽" /></SwiperSlide>
                     <SwiperSlide> <ProductItem cardImg={game} cardTitle="Spider-man 2" cardDesc="Код активации от игры" cardCost="5200 ₽" /></SwiperSlide>
                  </Swiper>
