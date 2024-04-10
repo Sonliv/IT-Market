@@ -6,6 +6,8 @@ import { createClient } from '@supabase/supabase-js';
 import { useNavigate } from 'react-router-dom';
 // import { ThemeSupa } from '@supabase/auth-ui-shared';
 import  {useEffect, useState} from 'react';
+import BaseBtn from '../../Components/Base/BaseBtn/BaseBtn';
+// import { Link } from 'react-router-dom';
 
 
 
@@ -40,17 +42,53 @@ const SuccessLogin = () => {
         <div>
             { Object.keys(user).length !== 0 ?
                     <>
-                    <div className='first-element info-success' >
+                    {/* <div className='first-element info-success' >
                         <div>Вы вошли в свою учетную запись!</div>
                         <button onClick={() => signOutUser()} >Выйти</button>
-                    </div>
+                    </div> */}
+                        <section className="first-element  success">
+                            <div className="container">
+                                <div className="success__container">
+                                {/* <div className='info-success' >
+                                        <div>Ваши <strong>Заказы</strong></div>
+                                        <span>Купленные вами товары</span>
+                                    </div>
+                                    <div className='info-success' >
+                                        <div>Создать карточку товара</div>
+                                        <span>Добавить новый товар</span>
+                                    </div> */}
+                                     <div className='info-success' >
+                                        <div className='info-success__title' >Вы вошли в свою учетную запись!</div>
+                                        {/* <button onClick={() => signOutUser()} >Выйти</button> */}
+                                        <div>
+                                            {/* <Link onClick={() => {navigate ("/") }} >
+                                                <BaseBtn BtnText="На главную" />
+                                            </Link> */}
+                                            <div onClick={() => {navigate ("/") }} >
+                                            <BaseBtn BtnText="На главную" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className='info-success' >
+                                    <div className='info-success__title'>Вы уже вошли</div>
+                                    <div onClick={() => signOutUser()} className="info-success__btn__logout">
+                                        <BaseBtn BtnText="Выйти" />
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
                     </>
                     :
                     <>
-                    <div className="fist-element info-success">
-                        <div className='first-element'>Вы не вошли в систему.</div>
-                        <button onClick={() => {navigate ("/") }} >На главную</button>
-                    </div>
+                        <section className="first-element success">
+                            <div className="container">
+                                <div className="info-success">
+                                    <div className='first-element'>Вы не вошли в систему.</div>
+                                    <button onClick={() => {navigate ("/") }} >На главную</button>
+                            </div>
+                            </div>
+                        </section>
                     </>
             } 
         </div>

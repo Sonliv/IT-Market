@@ -7,7 +7,7 @@ import './Header.scss';
 
 // import { Routes, Route, Link } from 'react-router-dom';
 // import CartPage from '../../Pages/CartPage';
-import CartPage from '../../Pages/CartPage/CartPage';
+// import CartPage from '../../Pages/CartPage/CartPage';
 import { Link } from 'react-router-dom';
 
 
@@ -23,17 +23,19 @@ const Header = () => {
                 <div className="header-wrapper">
                     <div className="header-logo-wrapper">
                         <Logo/>
-                        <button className="header-catalog">Каталог</button>
+                        <Link to= "/AddProduct" className="header-catalog" >
+                            <span>Добавить товар</span>
+                        </Link>
                     </div>
                     <form className='header-search' action="#">
                         <input className='header-search-input' placeholder='Яндекс плюс' type="text" />
                         <button className="header-search-button"><img src={searchImg} alt="" /></button>
                     </form>
                     <div className="header-buttons">
-                        <button className="header-buttons-item">
-                            <img src={favoriteImg} alt="" />
+                        <Link to="/AddProduct"className="header-buttons-item" >
+                             <img src={favoriteImg} alt="" />
                             <span>Избранное</span>
-                        </button>
+                        </Link>
                         <Link to="/CartPage"  className="header-buttons-item">
                         {/* onClick={toggleMenu} */}
                             <img src={cartImg} alt="" />

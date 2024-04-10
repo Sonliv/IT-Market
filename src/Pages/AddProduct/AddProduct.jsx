@@ -900,33 +900,36 @@ const AddProduct = () => {
                 <div className="container">
                     <form onSubmit={handleSubmit} className="add-product-wrapper">
                         <div>
-                            <label htmlFor="productFilmTitle">Название:</label>
+                            <label className='add-product__title'  htmlFor="productFilmTitle">Название:</label>
                             <input
                                 type="text"
                                 id='productFilmTitle'
                                 value={productFilmTitle}
                                 onChange={(e) => setProductFilmTitle(e.target.value)}
                             />
+                            <label className='add-product__desc'  htmlFor="productFilmTitle">В карточке товара на главной, будет корректно отображаться только первые 30 символов</label>
                         </div>
 
                         <div>
-                            <label htmlFor="productFilmDesc">Описание:</label>
+                            <label className='add-product__title' htmlFor="productFilmDesc">Описание:</label>
                             <textarea
                                 type="text"
                                 id='productFilmDesc'
                                 value={productFilmDesc}
                                 onChange={(e) => setProductFilmDesc(e.target.value)}
                             />
+                           <label className='add-product__desc'  htmlFor="productFilmTitle">В карточке товара на главной, будет корректно отображаться только первые 30 символов</label>
                         </div>
 
                         <div>
-                            <label htmlFor="productFilmCost">Цена:</label>
+                            <label className='add-product__title' htmlFor="productFilmCost">Цена:</label>
                             <input
                                 type="number"
                                 id='productFilmCost'
                                 value={productFilmCost}
                                 onChange={(e) => setProductFilmCost(e.target.value)}
                             />
+                             <label className='add-product__desc'  htmlFor="productFilmTitle">Цена в рублях, только цифры. Значок ₽ автоматический будет отображаться в карточке товара</label>
                         </div>
 
                         <div>
@@ -934,7 +937,10 @@ const AddProduct = () => {
                             <input type="file" id="productImage" onChange={handleImageUpload} />
                         </div>
 
-                        <BaseBtn BtnText="Опубликовать" />
+                        {/* <BaseBtn BtnText="Опубликовать" /> */}
+                        <div className="add-product__button">
+                         <BaseBtn BtnText="Опубликовать" />
+                        </div>
 
                         {formError && <p className='error'>{formError}</p>}
                     </form>

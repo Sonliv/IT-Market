@@ -2,9 +2,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import './Product.scss'
-import yaPlus from '/yaPlus.jpg'
-import book from '/book.webp'
-import game from '/spider.jpg'
 import rightArrow from '/arrow-right.svg'
 import leftArrow from '/arrow-left.svg'
 
@@ -29,19 +26,19 @@ const supabase = createClient(
 
 
 
-function ProductItem(props){
-    return(
-        <div className="product-item">
-            <div className="product-item-img-wrapper">
-              <img className='product-item-img' src={props.cardImg} alt="" />
-            </div>
-            <h3 className="product-item-title">{props.cardTitle}</h3>
-            <p className="product-item-desc">{props.cardDesc}</p>
-            <p className="product-item-cost">{props.cardCost}</p>
-            <button className="product-item-btn">В корзину</button>
-        </div>
-    );
-}
+// function ProductItem(props){
+//     return(
+//         <div className="product-item">
+//             <div className="product-item-img-wrapper">
+//               <img className='product-item-img' src={props.cardImg} alt="" />
+//             </div>
+//             <h3 className="product-item-title">{props.cardTitle}</h3>
+//             <p className="product-item-desc">{props.cardDesc}</p>
+//             <p className="product-item-cost">{props.cardCost}</p>
+//             <button className="product-item-btn">В корзину</button>
+//         </div>
+//     );
+// }
 
 
 
@@ -63,7 +60,6 @@ function ProductNavButtons(props) {
       </div>
   );
 }
-
 
 
 const Product = () => {
@@ -93,6 +89,8 @@ const Product = () => {
       fetchProductFilm()
     }, [])
 
+    
+    
     return (
         <section className="product">
             <div className="container">
@@ -105,7 +103,7 @@ const Product = () => {
                   <Swiper className='product-swiper'
                     spaceBetween={20}
                     slidesPerView={1}
-                    loop={true}
+                    loop={false}
                     onSlideChange={() => console.log('slide change')}
                     onSwiper={(swiper) => console.log(swiper)}
                     navigation={{
@@ -182,141 +180,259 @@ const Product = () => {
                 )}
                 </div>
                     <div className="product-nav">
-                        <h2 className="product-nav-title">Книги</h2>
+                        <h2 className="product-nav-title">Электронные книги</h2>
                         <ProductNavButtons buttonClassLeft="button-prev-2" buttonClassRight="button-next-2"/>
                 </div>
                 <div className="product-wrapper">
-                <Swiper className='product-swiper'
+                {productFilm && (
+                  <Swiper className='product-swiper'
                     spaceBetween={20}
-                    slidesPerView={1.5}
-                    loop={true}
+                    slidesPerView={1}
+                    loop={false}
                     onSlideChange={() => console.log('slide change')}
                     onSwiper={(swiper) => console.log(swiper)}
                     navigation={{
-                        prevEl: ".button-prev-2",
-                        nextEl: ".button-next-2"
+                      prevEl: ".button-prev-2",
+                      nextEl: ".button-next-2"
                     }}
                     modules={[Navigation, Autoplay]}
                     pagination={{
-                        clickable: true,
-                      }}
-                      breakpoints={{
-                        350: {
-                            slidesPerView: 1.5,
-                          },
-                          400: {
-                            slidesPerView: 2,
-                            slidesPerGroup: 1,
-                          },
-                          500: {
-                            slidesPerView: 2.3,
-                            slidesPerGroup: 1,
-                          },
-                          600: {
-                            slidesPerView: 2.8,
-                            slidesPerGroup: 2,
-                          },
-                          700: {
-                            slidesPerView: 3.3,
-                            slidesPerGroup: 2,
-                          },
-                          800: {
-                            slidesPerView: 3.5,
-                            slidesPerGroup: 2,
-                          },
-                          900: {
-                            slidesPerView: 3.8,
-                            slidesPerGroup: 2,
-                          },
-                          1000: {
-                            slidesPerView: 4.3,
-                            slidesPerGroup: 2,
-                          },
-                          1100: {
-                            slidesPerView: 4.6,
-                            slidesPerGroup: 2,
-                          },
-                          1200: {
-                            slidesPerView: 5,
-                            slidesPerGroup: 2,
-                          },
-                          1300: {
-                            slidesPerView: 5.5,
-                            slidesPerGroup: 3,
-                          },
-                      }}
-                    >
-                    {/* <SwiperSlide> <ProductItem cardImg={book} cardTitle="Триумфальная арка" cardDesc="Эрих Мария Ремарк" cardCost="220 ₽" /></SwiperSlide> */}
-                 </Swiper>
+                      clickable: true,
+                    }}
+                    breakpoints={{
+                      350: {
+                        slidesPerView: 1.5,
+                      },
+                      400: {
+                        slidesPerView: 2,
+                        slidesPerGroup: 1,
+                      },
+                      500: {
+                        slidesPerView: 2.3,
+                        slidesPerGroup: 1,
+                      },
+                      600: {
+                        slidesPerView: 2.8,
+                        slidesPerGroup: 2,
+                      },
+                      700: {
+                        slidesPerView: 3.3,
+                        slidesPerGroup: 2,
+                      },
+                      800: {
+                        slidesPerView: 3.5,
+                        slidesPerGroup: 2,
+                      },
+                      900: {
+                        slidesPerView: 3.8,
+                        slidesPerGroup: 2,
+                      },
+                      1000: {
+                        slidesPerView: 4.3,
+                        slidesPerGroup: 2,
+                      },
+                      1100: {
+                        slidesPerView: 4.6,
+                        slidesPerGroup: 2,
+                      },
+                      1200: {
+                        slidesPerView: 5,
+                        slidesPerGroup: 2,
+                      },
+                      1300: {
+                        slidesPerView: 5.5,
+                        slidesPerGroup: 3,
+                      },
+                    }}
+                  >
+                    {productFilm.map((film, index) => (
+                      <SwiperSlide key={index}>
+                        <div className="product-item">
+                          <div className="product-item">
+                            <div className="product-item-img-wrapper">
+                              <img className='product-item-img' src={film.productImage} alt="" />
+                            </div>
+                            <h3 className="product-item-title">{film.productFilmTitle}</h3>
+                            {/* <img src={film.productImage} alt="" /> */}
+                            <p className="product-item-desc">{film.product_film_desc}</p>
+                            <p className="product-item-cost">{film.product_film_cost} Р</p>
+                            <button className="product-item-btn">В корзину</button>
+                        </div>
+                        </div>
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
+                )}
                 </div>
                 <div className="product-nav">
                      <h2 className="product-nav-title">Игры</h2>
                      <ProductNavButtons buttonClassLeft="button-prev-3" buttonClassRight="button-next-3"/>
                 </div>
                 <div className="product-wrapper">
-                <Swiper className='product-swiper'
+                {productFilm && (
+                  <Swiper className='product-swiper'
                     spaceBetween={20}
-                    slidesPerView={1.5}
-                    loop={true}
+                    slidesPerView={1}
+                    loop={false}
                     onSlideChange={() => console.log('slide change')}
                     onSwiper={(swiper) => console.log(swiper)}
                     navigation={{
-                        prevEl: ".button-prev-3",
-                        nextEl: ".button-next-3"
+                      prevEl: ".button-prev-3",
+                      nextEl: ".button-next-3"
                     }}
                     modules={[Navigation, Autoplay]}
                     pagination={{
-                        clickable: true,
-                      }}
-                      breakpoints={{
-                        350: {
-                            slidesPerView: 1.5,
-                          },
-                          400: {
-                            slidesPerView: 2,
-                            slidesPerGroup: 1,
-                          },
-                          500: {
-                            slidesPerView: 2.3,
-                            slidesPerGroup: 1,
-                          },
-                          600: {
-                            slidesPerView: 2.8,
-                            slidesPerGroup: 2,
-                          },
-                          700: {
-                            slidesPerView: 3.3,
-                            slidesPerGroup: 2,
-                          },
-                          800: {
-                            slidesPerView: 3.5,
-                            slidesPerGroup: 2,
-                          },
-                          900: {
-                            slidesPerView: 3.8,
-                            slidesPerGroup: 2,
-                          },
-                          1000: {
-                            slidesPerView: 4.3,
-                            slidesPerGroup: 2,
-                          },
-                          1100: {
-                            slidesPerView: 4.6,
-                            slidesPerGroup: 2,
-                          },
-                          1200: {
-                            slidesPerView: 5,
-                            slidesPerGroup: 2,
-                          },
-                          1300: {
-                            slidesPerView: 5.5,
-                            slidesPerGroup: 3,
-                          },
-                      }}
-                    >
-                    {/* <SwiperSlide> <ProductItem cardImg={game} cardTitle="Spider-man 2" cardDesc="Код активации от игры" cardCost="5200 ₽" /></SwiperSlide> */}
-                    <SwiperSlide> <ProductItem cardImg={game} cardTitle="Spider-man 2" cardDesc="Код активации от игры" cardCost="5200 ₽" /></SwiperSlide>
-                 </Swiper>
+                      clickable: true,
+                    }}
+                    breakpoints={{
+                      350: {
+                        slidesPerView: 1.5,
+                      },
+                      400: {
+                        slidesPerView: 2,
+                        slidesPerGroup: 1,
+                      },
+                      500: {
+                        slidesPerView: 2.3,
+                        slidesPerGroup: 1,
+                      },
+                      600: {
+                        slidesPerView: 2.8,
+                        slidesPerGroup: 2,
+                      },
+                      700: {
+                        slidesPerView: 3.3,
+                        slidesPerGroup: 2,
+                      },
+                      800: {
+                        slidesPerView: 3.5,
+                        slidesPerGroup: 2,
+                      },
+                      900: {
+                        slidesPerView: 3.8,
+                        slidesPerGroup: 2,
+                      },
+                      1000: {
+                        slidesPerView: 4.3,
+                        slidesPerGroup: 2,
+                      },
+                      1100: {
+                        slidesPerView: 4.6,
+                        slidesPerGroup: 2,
+                      },
+                      1200: {
+                        slidesPerView: 5,
+                        slidesPerGroup: 2,
+                      },
+                      1300: {
+                        slidesPerView: 5.5,
+                        slidesPerGroup: 3,
+                      },
+                    }}
+                  >
+                    {productFilm.map((film, index) => (
+                      <SwiperSlide key={index}>
+                        <div className="product-item">
+                          <div className="product-item">
+                            <div className="product-item-img-wrapper">
+                              <img className='product-item-img' src={film.productImage} alt="" />
+                            </div>
+                            <h3 className="product-item-title">{film.productFilmTitle}</h3>
+                            {/* <img src={film.productImage} alt="" /> */}
+                            <p className="product-item-desc">{film.product_film_desc}</p>
+                            <p className="product-item-cost">{film.product_film_cost} Р</p>
+                            <button className="product-item-btn">В корзину</button>
+                        </div>
+                        </div>
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
+                )}
+                </div>
+                <div className="product-nav">
+                     <h2 className="product-nav-title">Аудио Книги</h2>
+                     <ProductNavButtons buttonClassLeft="button-prev-4" buttonClassRight="button-next-4"/>
+                </div>
+                <div className="product-wrapper">
+                {productFilm && (
+                  <Swiper className='product-swiper'
+                    spaceBetween={20}
+                    slidesPerView={1}
+                    loop={false}
+                    onSlideChange={() => console.log('slide change')}
+                    onSwiper={(swiper) => console.log(swiper)}
+                    navigation={{
+                      prevEl: ".button-prev-4",
+                      nextEl: ".button-next-4"
+                    }}
+                    modules={[Navigation, Autoplay]}
+                    pagination={{
+                      clickable: true,
+                    }}
+                    breakpoints={{
+                      350: {
+                        slidesPerView: 1.5,
+                      },
+                      400: {
+                        slidesPerView: 2,
+                        slidesPerGroup: 1,
+                      },
+                      500: {
+                        slidesPerView: 2.3,
+                        slidesPerGroup: 1,
+                      },
+                      600: {
+                        slidesPerView: 2.8,
+                        slidesPerGroup: 2,
+                      },
+                      700: {
+                        slidesPerView: 3.3,
+                        slidesPerGroup: 2,
+                      },
+                      800: {
+                        slidesPerView: 3.5,
+                        slidesPerGroup: 2,
+                      },
+                      900: {
+                        slidesPerView: 3.8,
+                        slidesPerGroup: 2,
+                      },
+                      1000: {
+                        slidesPerView: 4.3,
+                        slidesPerGroup: 2,
+                      },
+                      1100: {
+                        slidesPerView: 4.6,
+                        slidesPerGroup: 2,
+                      },
+                      1200: {
+                        slidesPerView: 5,
+                        slidesPerGroup: 2,
+                      },
+                      1300: {
+                        slidesPerView: 5.5,
+                        slidesPerGroup: 3,
+                      },
+                    }}
+                  >
+                    {productFilm.map((film, index) => (
+                      <SwiperSlide key={index}>
+                        <div className="product-item">
+                          <div className="product-item">
+                            <div className="product-item-img-wrapper">
+                              <img className='product-item-img' src={film.productImage} alt="" />
+                            </div>
+                            <h3 className="product-item-title">{film.productFilmTitle}</h3>
+                            {/* <img src={film.productImage} alt="" /> */}
+                            <p className="product-item-desc">{film.product_film_desc}</p>
+                            <p className="product-item-cost">{film.product_film_cost} Р</p>
+                            <button className="product-item-btn">В корзину</button>
+                        </div>
+                        </div>
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
+                )}
                 </div>
             </div>
         </section>

@@ -25,10 +25,15 @@
     }
     &-catalog{
         background-color: $color-black;
-
-        color: #fff;
         border-radius: $border;
         padding: 10px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        & span{
+            color: #fff;
+        }
 
         &:hover{
             background-color: $color-black-hover;
@@ -207,4 +212,10 @@
         }
     }
 
+}
+
+@media(max-width: 400px){
+    .header-catalog span {
+        text-align: center;
+    }
 }

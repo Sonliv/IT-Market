@@ -1,9 +1,33 @@
 
 @import '../../reset.scss';
+@import '../../reset.scss';
 
 
 // test
 .info-success{
-    width: 320px;
-    margin: 0 auto;
+    max-width: 46%;
+    min-width: 46%;
+    min-height: 120px;
+    max-height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    // margin: 0 auto;
+    box-shadow: 0 0 14px 5px #e4e3e366;
+    padding: 20px;
+    border-radius: $border;
+
+   &__btn__logout .btn{
+    background-color: rgba(255, 0, 0, 0.962);
+   }
+
+   &__title{
+    text-align: center;
+    font-size: 20px;
+   }
+}
+
+.success__container{
+    display: flex;
+    justify-content: space-between;
 }

@@ -110,3 +110,18 @@
     }
 
 };
+
+
+
+@media (max-width: 500px){
+    .product-nav img {
+        display: none;
+    }
+}
+
+@media(max-width: 400px){
+    .product-nav-title {
+        font-size: 34px;
+        line-height: 36px;
+    }
+}

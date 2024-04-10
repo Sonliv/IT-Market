@@ -72,7 +72,14 @@ a, li{
 
 
 .first-element{
-    margin-top: 200px;
+    margin-top: 140px;
+}
+
+@media (max-width: 930px){
+
+    .first-element{
+        margin-top: 200px;
+    }
 }
 
 .wrapper {
