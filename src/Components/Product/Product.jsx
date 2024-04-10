@@ -167,9 +167,10 @@ const Product = () => {
                         <div className="product-item">
                           <div className="product-item">
                             <div className="product-item-img-wrapper">
-                              <img className='product-item-img' src={yaPlus} alt="" />
+                              <img className='product-item-img' src={film.productImage} alt="" />
                             </div>
                             <h3 className="product-item-title">{film.productFilmTitle}</h3>
+                            {/* <img src={film.productImage} alt="" /> */}
                             <p className="product-item-desc">{film.product_film_desc}</p>
                             <p className="product-item-cost">{film.product_film_cost} Р</p>
                             <button className="product-item-btn">В корзину</button>
