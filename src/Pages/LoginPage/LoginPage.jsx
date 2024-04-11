@@ -4,6 +4,7 @@ import { createClient } from '@supabase/supabase-js';
 import { Auth }  from '@supabase/auth-ui-react'
 import { useNavigate } from 'react-router-dom';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
+import { useEffect, useState } from 'react';
 
 
 
@@ -17,15 +18,29 @@ const supabase = createClient(
 const LoginPage = () => {
 
     const navigate = useNavigate()
+    const [session, setSession] = useState(null)
 
-    supabase.auth.onAuthStateChange(async (event, session) => {
-        if (session) {
-            // Forward to success url
-            navigate("/SuccessLogin")
-        }
-    })
+    // supabase.auth.onAuthStateChange(async (event, session) => {
+    //     if (session) {
+    //         // Forward to success url
+    //         navigate("/SuccessLogin")
+    //     }
+    // })
 
-    return (
+    useEffect(() => {
+      supabase.auth.getSession().then(({data: {session}}) => {
+        setSession(session)
+      })
+
+      const { data: { subscription }} = supabase.auth.onAuthStateChange((_event, session) => {
+        setSession(session)
+      })
+
+      return () => subscription.unsubscribe()
+    }, [])
+
+    if(!session){
+      return (
         <div className="first-element">
             <div className="auth">
                 <Auth
@@ -73,7 +88,14 @@ const LoginPage = () => {
                 />
             </div>
         </div>
-    );
+      )
+    }
+    else {
+      return(
+        navigate('/SuccessLogin')
+      )
+    }
+
 }
 
 export default LoginPage;

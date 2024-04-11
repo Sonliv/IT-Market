@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import  {useEffect, useState} from 'react';
 import BaseBtn from '../../Components/Base/BaseBtn/BaseBtn';
 import { Link } from 'react-router-dom';
+import { PATHS } from '../../../router';
 
 
 
@@ -17,7 +18,6 @@ const supabase = createClient(
 
 const SuccessLogin = () => {
     const [user, setUser] = useState({});
-    const navigate = useNavigate();
 
     useEffect(() => {
         async function getUserData() {
@@ -32,14 +32,12 @@ const SuccessLogin = () => {
     }, []);
 
     async function signOutUser(){
-        // eslint-disable-next-line no-unused-vars
         const { error } = await supabase.auth.signOut();
-        navigate("/");
     }
 
     return (
         <div>
-            { Object.keys(user).length !== 0 ?
+            { user.length !== 0 ?
                     <>
                     {/* <div className='first-element info-success' >
                         <div>Вы вошли в свою учетную запись!</div>
@@ -66,16 +64,16 @@ const SuccessLogin = () => {
                                             {/* <div onClick={() => {navigate ("/") }} >
                                             <BaseBtn BtnText="На главную" />
                                             </div> */}
-                                           <Link to = "/" >
+                                           <Link to = {PATHS.HOME} >
                                             <BaseBtn BtnText="На главную" />
                                            </Link>
                                         </div>
                                     </div>
                                     <div className='info-success' >
                                     <div className='info-success__title'>Вы уже вошли</div>
-                                    <div onClick={() => signOutUser()} className="info-success__btn__logout">
+                                    <Link to={PATHS.HOME} onClick={() => signOutUser()} className="info-success__btn__logout">
                                         <BaseBtn BtnText="Выйти" />
-                                    </div>
+                                    </Link>
                                     </div>
                                 </div>
                             </div>
@@ -87,7 +85,8 @@ const SuccessLogin = () => {
                             <div className="container">
                                 <div className="info-success">
                                     <div className='first-element'>Вы не вошли в систему.</div>
-                                    <button onClick={() => {navigate ("/") }} >На главную</button>
+                                    {/* <button onClick={() => {navigate ("/") }} >На главную</button> */}
+                                    <Link to={PATHS.HOME}/>
                             </div>
                             </div>
                         </section>

@@ -9,21 +9,16 @@ import './Header.scss';
 // import CartPage from '../../Pages/CartPage';
 // import CartPage from '../../Pages/CartPage/CartPage';
 import { Link } from 'react-router-dom';
-
-
-
-
+import { PATHS } from '../../../router';
 
 const Header = () => {
-
-
     return (
         <header className="header">
             <div className="container">
                 <div className="header-wrapper">
                     <div className="header-logo-wrapper">
                         <Logo/>
-                        <Link to= "/AddProduct" className="header-catalog" >
+                        <Link to= {PATHS.ADDPRODUCT} className="header-catalog" >
                             <span>Добавить товар</span>
                         </Link>
                     </div>
@@ -32,7 +27,7 @@ const Header = () => {
                         <button className="header-search-button"><img src={searchImg} alt="" /></button>
                     </form>
                     <div className="header-buttons">
-                        <Link to="/AddProduct"className="header-buttons-item" >
+                        <Link to={PATHS.ADDPRODUCT}className="header-buttons-item" >
                              <img src={favoriteImg} alt="" />
                             <span>Избранное</span>
                         </Link>
@@ -41,7 +36,7 @@ const Header = () => {
                             <img src={cartImg} alt="" />
                             <span>Корзина</span>
                         </Link>
-                        <Link to="/LoginPage" className="header-buttons-item">
+                        <Link to={PATHS.LOGIN} className="header-buttons-item">
                             <img src={userImg} alt="" />
                             <span>Имя</span>
                         </Link>

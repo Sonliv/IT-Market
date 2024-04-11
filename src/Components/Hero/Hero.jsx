@@ -18,8 +18,6 @@ const Hero = () => {
                     spaceBetween={10}
                     slidesPerView={1}
                     loop={true}
-                    onSlideChange={() => console.log('slide change')}
-                    onSwiper={(swiper) => console.log(swiper)}
                     navigation={true} modules={[Navigation, Autoplay]}
                     pagination={{
                         clickable: true,

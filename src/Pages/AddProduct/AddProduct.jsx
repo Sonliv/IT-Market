@@ -1594,6 +1594,7 @@ import BaseBtn from '../../Components/Base/BaseBtn/BaseBtn';
 import './AddProduct.scss'; // Подключаем стили
 import { useNavigate } from 'react-router-dom';
 import { createClient } from '@supabase/supabase-js';
+import { PATHS } from '../../../router'
 
 const AddProduct = () => {
     const supabase = createClient(
@@ -1647,7 +1648,7 @@ const AddProduct = () => {
             scrollToError();
         } else {
             console.log(data);
-            navigate('/');
+            navigate(PATHS.HOME);
         }
     };
 
