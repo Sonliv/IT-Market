@@ -95,7 +95,7 @@ const Product = () => {
         <section className="product">
             <div className="container">
                  <div className="product-nav">
-                     <h2 className="product-nav-title">Фильмы</h2>
+                     <h2 className="product-nav-title">Кино</h2>
                      <ProductNavButtons buttonClassLeft="button-prev-1" buttonClassRight="button-next-1"/>
                 </div>
                 <div className="product-wrapper">

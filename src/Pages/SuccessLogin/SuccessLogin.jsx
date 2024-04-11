@@ -1,4 +1,3 @@
-
 import './SuccessLogin.scss';
 
 import { createClient } from '@supabase/supabase-js';
@@ -7,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 // import { ThemeSupa } from '@supabase/auth-ui-shared';
 import  {useEffect, useState} from 'react';
 import BaseBtn from '../../Components/Base/BaseBtn/BaseBtn';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 
@@ -64,9 +63,12 @@ const SuccessLogin = () => {
                                             {/* <Link onClick={() => {navigate ("/") }} >
                                                 <BaseBtn BtnText="На главную" />
                                             </Link> */}
-                                            <div onClick={() => {navigate ("/") }} >
+                                            {/* <div onClick={() => {navigate ("/") }} >
                                             <BaseBtn BtnText="На главную" />
-                                            </div>
+                                            </div> */}
+                                           <Link to = "/" >
+                                            <BaseBtn BtnText="На главную" />
+                                           </Link>
                                         </div>
                                     </div>
                                     <div className='info-success' >
