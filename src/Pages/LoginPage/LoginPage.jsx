@@ -20,13 +20,6 @@ const LoginPage = () => {
     const navigate = useNavigate()
     const [session, setSession] = useState(null)
 
-    // supabase.auth.onAuthStateChange(async (event, session) => {
-    //     if (session) {
-    //         // Forward to success url
-    //         navigate("/SuccessLogin")
-    //     }
-    // })
-
     useEffect(() => {
       supabase.auth.getSession().then(({data: {session}}) => {
         setSession(session)
