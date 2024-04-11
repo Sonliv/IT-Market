@@ -9,6 +9,7 @@ import book from '/book.webp'
 import BaseBtn from '../../Components/Base/BaseBtn/BaseBtn'
 
 import {Link} from 'react-router-dom'
+import { PATHS } from '../../../router'
 
 
 
@@ -47,7 +48,7 @@ const CartPage = () => {
                             <span className="cart-total-info-text">Итого:</span>
                             <span className="cart-total-info-sum">624 ₽</span>
                         </div>
-                        <Link to="/loginPage">
+                        <Link to={PATHS.LOGIN}>
                           <BaseBtn BtnText="Оформить заказ" />
                         </Link>
                      </div>
