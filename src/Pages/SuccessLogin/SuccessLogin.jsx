@@ -2,7 +2,6 @@ import './SuccessLogin.scss';
 
 import { createClient } from '@supabase/supabase-js';
 // import { Auth }  from '@supabase/auth-ui-react'
-import { useNavigate } from 'react-router-dom';
 // import { ThemeSupa } from '@supabase/auth-ui-shared';
 import  {useEffect, useState} from 'react';
 import BaseBtn from '../../Components/Base/BaseBtn/BaseBtn';
@@ -23,7 +22,7 @@ const SuccessLogin = () => {
         async function getUserData() {
             await supabase.auth.getUser().then((value) => {
                 if(value.data?.user){
-                    console.log(value.data.user);
+                    // console.log(value.data.user);
                     setUser(value.data.user);
                 }
             })

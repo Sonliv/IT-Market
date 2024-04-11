@@ -3,6 +3,7 @@ import searchImg from '/search.svg';
 import cartImg from '/cart.svg'
 import userImg from '/user.svg'
 import favoriteImg from '/favorite.svg'
+import { createClient } from '@supabase/supabase-js';
 import './Header.scss';
 
 // import { Routes, Route, Link } from 'react-router-dom';
@@ -10,8 +11,30 @@ import './Header.scss';
 // import CartPage from '../../Pages/CartPage/CartPage';
 import { Link } from 'react-router-dom';
 import { PATHS } from '../../../router';
+import { useState, useEffect } from 'react';
 
 const Header = () => {
+    const [userName, setUserName] = useState([])
+
+    const supabase = createClient(
+        'https://poprpfzqyzbmsbhtvvjw.supabase.co', // Supabase URL
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBvcHJwZnpxeXpibXNiaHR2dmp3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTE3MDYzMTEsImV4cCI6MjAyNzI4MjMxMX0.wMh3igzPTekhCkRSWyknGW2YEJII8JJH_8PvYnu3hXo' // API Key
+    );
+
+    useEffect(() => {
+        const getUserName = () => {
+            supabase.auth.onAuthStateChange((event, session) => {
+                if (session) {
+                    setUserName(session.user.email);
+                } else {
+                    setUserName("Имя");
+                }
+            });
+        };
+        getUserName();
+    }, []);
+
+
     return (
         <header className="header">
             <div className="container">
@@ -38,7 +61,7 @@ const Header = () => {
                         </Link>
                         <Link to={PATHS.LOGIN} className="header-buttons-item">
                             <img src={userImg} alt="" />
-                            <span>Имя</span>
+                            {userName && <span>{userName}</span>}
                         </Link>
                     </div>
                 </div>
