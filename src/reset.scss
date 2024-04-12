@@ -82,6 +82,12 @@ a, li{
     }
 }
 
+@media(max-width: 500px){
+    .first-element {
+        margin-top: 264px;
+    }
+}
+
 .wrapper {
     display: flex;
     flex-direction: column;

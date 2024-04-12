@@ -34,7 +34,7 @@ const CartPage = () => {
     
 
     return (
-        <section className="cart-page">
+        <section className="cart-page first-element">
             <div className="container">
                 <h2 className="cart-title">Корзина</h2>
                 <div className="cart-container">

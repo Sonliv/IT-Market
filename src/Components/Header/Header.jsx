@@ -59,7 +59,7 @@ const Header = () => {
                             <img src={cartImg} alt="" />
                             <span>Корзина</span>
                         </Link>
-                        <Link to={PATHS.LOGIN} className="header-buttons-item">
+                        <Link to={PATHS.LOGIN} className="header-buttons-item header-buttons-item__user">
                             <img src={userImg} alt="" />
                             {userName && <span>{userName}</span>}
                         </Link>
