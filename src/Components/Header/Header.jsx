@@ -52,7 +52,7 @@ const Header = () => {
                              <img src={favoriteImg} alt="" />
                             <span>Избранное</span>
                         </Link>
-                        <Link to="/CartPage"  className="header-buttons-item">
+                        <Link to={PATHS.SUCCESS}  className="header-buttons-item">
                         {/* onClick={toggleMenu} */}
                             <img src={orderImg} alt="" />
                             <span>Заказы</span>

@@ -19,18 +19,33 @@ const supabase = createClient(
 
 const SuccessLogin = () => {
     const [user, setUser] = useState({});
+    const [userEmail, setUserEmail] = useState([])
+    const [userImage, setUserImage] = useState([])
 
     useEffect(() => {
         async function getUserData() {
             await supabase.auth.getUser().then((value) => {
                 if(value.data?.user){
-                    // console.log(value.data.user);
-                    setUser(value.data.user);;;
+                    setUser(value.data.user);
                 }
             })
         }
         getUserData();
     }, []);
+
+    useEffect(() => {
+        const getUserEmail = () => {
+            supabase.auth.onAuthStateChange((event, session) => {
+                if (session) {
+                    setUserEmail(session.user.email);
+                    setUserImage(session.user.user_metadata.avatar_url)
+                } else {
+                    setUserEmail("Имя");
+                }
+            });
+        };
+        getUserEmail();
+    }, [])
 
     async function signOutUser(){
         const { error } = await supabase.auth.signOut();
@@ -89,10 +104,10 @@ const SuccessLogin = () => {
                                         <div className="info-success__order">
                                             <div className="info-success__order__img">
                                                 {/* <img src={userImg} alt="" /> */}
-                                                <img src="https://cdn.discordapp.com/avatars/359583799614636032/fcc7fdc6bccdb2416fe66befd2f31f5c.png" alt="" />
+                                                <img src={!userImage ? userImg : userImage} alt="" />
                                             </div>
                                             <div className='info-success__order__text' >
-                                                <h3 className="info-success__order__text__title">пример_почты@gmai.com</h3>
+                                                <h3 className="info-success__order__text__title">{userEmail}</h3>
                                                 {/* <p className="info-success__order__text__desc">Товары</p> */}
                                                 <div className='info-success__order__text__button' >
                                                  <BaseBtn BtnText="Товары" />
