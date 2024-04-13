@@ -25,7 +25,7 @@ const SuccessLogin = () => {
             await supabase.auth.getUser().then((value) => {
                 if(value.data?.user){
                     // console.log(value.data.user);
-                    setUser(value.data.user);
+                    setUser(value.data.user);;;
                 }
             })
         }
