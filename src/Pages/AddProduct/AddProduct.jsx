@@ -59,6 +59,8 @@ const AddProduct = () => {
             console.log(data);
             navigate(PATHS.HOME);
         }
+
+        console.log(productFilmCategory)
     };
 
     const handleImageUpload = async (e) => {
