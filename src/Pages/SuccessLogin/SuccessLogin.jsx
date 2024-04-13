@@ -47,6 +47,8 @@ const SuccessLogin = () => {
         getUserEmail();
     }, [])
 
+    
+
     async function signOutUser(){
         const { error } = await supabase.auth.signOut();
     }
