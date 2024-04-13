@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import './SuccessLogin.scss';
 
 import { createClient } from '@supabase/supabase-js';
@@ -7,7 +8,8 @@ import  {useEffect, useState} from 'react';
 import BaseBtn from '../../Components/Base/BaseBtn/BaseBtn';
 import { Link } from 'react-router-dom';
 import { PATHS } from '../../../router';
-
+import yaPlus from '/yaPlus.webp';
+import userImg from '/user.svg'
 
 
 const supabase = createClient(
@@ -38,42 +40,68 @@ const SuccessLogin = () => {
         <div>
             { user.length !== 0 ?
                     <>
-                    {/* <div className='first-element info-success' >
-                        <div>Вы вошли в свою учетную запись!</div>
-                        <button onClick={() => signOutUser()} >Выйти</button>
-                    </div> */}
                         <section className="first-element  success">
                             <div className="container">
                                 <div className="success__container">
-                                {/* <div className='info-success' >
-                                        <div>Ваши <strong>Заказы</strong></div>
-                                        <span>Купленные вами товары</span>
-                                    </div>
-                                    <div className='info-success' >
-                                        <div>Создать карточку товара</div>
-                                        <span>Добавить новый товар</span>
-                                    </div> */}
                                      <div className='info-success' >
                                         <div className='info-success__title' >Вы вошли в свою учетную запись!</div>
                                         {/* <button onClick={() => signOutUser()} >Выйти</button> */}
                                         <div>
-                                            {/* <Link onClick={() => {navigate ("/") }} >
-                                                <BaseBtn BtnText="На главную" />
-                                            </Link> */}
-                                            {/* <div onClick={() => {navigate ("/") }} >
-                                            <BaseBtn BtnText="На главную" />
-                                            </div> */}
                                            <Link to = {PATHS.HOME} >
                                             <BaseBtn BtnText="На главную" />
                                            </Link>
                                         </div>
                                     </div>
-                                    <div className='info-success' >
-                                    <div className='info-success__title'>Вы уже вошли</div>
+                                    <div className='info-success exit' >
+                                    <div className='info-success__title'>Выйти из учетной записи</div>
                                     <Link to={PATHS.HOME} onClick={() => signOutUser()} className="info-success__btn__logout">
                                         <BaseBtn BtnText="Выйти" />
                                     </Link>
                                     </div>
+
+                                    <div className='info-success order-success' >
+                                        <div className='info-success__title'>Заказы</div>
+                                        <div className='info-success__order__wrapper' >
+                                            <div className="info-success__order">
+                                                <div className="info-success__order__img">
+                                                    <img src={yaPlus} alt="" />
+                                                </div>
+                                                <div className='info-success__order__text' >
+                                                    <h3 className="info-success__order__text__title">Дотка 2</h3>
+                                                    {/* <p className="info-success__order__text__desc">игра бомба игра бомба игра бомба игра бомба</p> */}
+                                                    <span className="info-success__order__text__key">Ключ товара: <strong>fwdfwk232qdqskdk2</strong></span>
+                                                </div>
+                                            </div>
+                                            <div className="info-success__order">
+                                                <div className="info-success__order__img">
+                                                    <img src={yaPlus} alt="" />
+                                                </div>
+                                                <div className='info-success__order__text' >
+                                                    <h3 className="info-success__order__text__title">Дотка 2</h3>
+                                                    <span className="info-success__order__text__key">Ключ товара: <strong>fwdfwk232qdqskdk2</strong></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className='info-success order-success user' >
+                                        <div className='info-success__title'>Информация о пользователе</div>
+                                        <div className="info-success__order">
+                                            <div className="info-success__order__img">
+                                                {/* <img src={userImg} alt="" /> */}
+                                                <img src="https://cdn.discordapp.com/avatars/359583799614636032/fcc7fdc6bccdb2416fe66befd2f31f5c.png" alt="" />
+                                            </div>
+                                            <div className='info-success__order__text' >
+                                                <h3 className="info-success__order__text__title">пример_почты@gmai.com</h3>
+                                                {/* <p className="info-success__order__text__desc">Товары</p> */}
+                                                <div className='info-success__order__text__button' >
+                                                 <BaseBtn BtnText="Товары" />
+                                                </div>
+                                                {/* <span className="info-success__order__text__key">fwdfwk232qdqskdk2</span> */}
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </section>

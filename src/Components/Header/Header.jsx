@@ -1,14 +1,12 @@
 import Logo from '../Base/Logo/Logo';
 import searchImg from '/search.svg';
-import cartImg from '/cart.svg'
+// import cartImg from '/cart.svg'
 import userImg from '/user.svg'
+import orderImg from '/order__icon.webp'
 import favoriteImg from '/favorite.svg'
 import { createClient } from '@supabase/supabase-js';
 import './Header.scss';
 
-// import { Routes, Route, Link } from 'react-router-dom';
-// import CartPage from '../../Pages/CartPage';
-// import CartPage from '../../Pages/CartPage/CartPage';
 import { Link } from 'react-router-dom';
 import { PATHS } from '../../../router';
 import { useState, useEffect } from 'react';
@@ -56,8 +54,8 @@ const Header = () => {
                         </Link>
                         <Link to="/CartPage"  className="header-buttons-item">
                         {/* onClick={toggleMenu} */}
-                            <img src={cartImg} alt="" />
-                            <span>Корзина</span>
+                            <img src={orderImg} alt="" />
+                            <span>Заказы</span>
                         </Link>
                         <Link to={PATHS.LOGIN} className="header-buttons-item header-buttons-item__user">
                             <img src={userImg} alt="" />

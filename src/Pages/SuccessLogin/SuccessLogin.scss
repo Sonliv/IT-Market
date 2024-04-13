@@ -1,14 +1,11 @@
 
 @import '../../reset.scss';
-@import '../../reset.scss';
 
 
 // test
 .info-success{
-    max-width: 46%;
-    min-width: 46%;
-    min-height: 120px;
-    max-height: 100px;
+    max-width: 48%;
+    min-width: 48%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -24,10 +21,92 @@
    &__title{
     text-align: center;
     font-size: 20px;
+    margin-bottom: 20px;
    }
+
+   &__order{
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    padding: 14px;
+    border-radius: $border;
+    box-shadow: 0 0 14px 5px rgba(228, 227, 227, 0.4);
+
+    &__wrapper{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    &__img img{
+        height: 100px;
+        border-radius: $border;
+        object-fit: contain;
+    }
+
+    &__text{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        &__key{
+            line-height: 22px;
+        }
+
+        &__button .btn{
+            padding: 7px 14px;
+            width: 100%;
+        }
+    }
+
+   }
+}
+
+.info-success.order-success{
+    max-height: none;
+    min-height: none;
+    height: auto;
 }
 
 .success__container{
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.info-success.order-success.user{
+    max-height: 250px;
+}
+
+
+@media (max-width: 1024px){
+    .info-success{
+        max-width: none;
+        min-width: 48%;
+        width: 100%;
+
+        &.exit{
+            order: 10;
+        }
+        &__order__wrapper{
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+    }
+}
+
+
+@media (max-width: 425px){
+    .info-success{
+        &__order{
+            flex-direction: column;
+            gap: 15px;
+
+            &__text{
+                text-align: center;
+            }
+        }
+    }
 }

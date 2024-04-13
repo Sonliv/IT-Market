@@ -8,7 +8,7 @@ import listen from '/listen.png'
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
-import {  Autoplay} from 'swiper/modules';
+// import {  Autoplay} from 'swiper/modules';
 
 
 // Import Swiper styles
