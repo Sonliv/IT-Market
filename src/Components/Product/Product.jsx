@@ -195,8 +195,8 @@ const Product = () => {
                     )}
                 </div>
                 <div className="product-nav">
-                    <h2 className="product-nav-title">Кино</h2>
-                    <ProductNavButtons buttonClassLeft="button-prev-1" buttonClassRight="button-next-1" />
+                    <h2 className="product-nav-title">Игры</h2>
+                    <ProductNavButtons buttonClassLeft="button-prev-2" buttonClassRight="button-next-2" />
                 </div>
                 <div className="product-wrapper">
                     {/* Показываем прелоадер, если данные еще загружаются */}
@@ -215,8 +215,8 @@ const Product = () => {
                             onSlideChange={() => console.log('slide change')}
                             onSwiper={(swiper) => console.log(swiper)}
                             navigation={{
-                                prevEl: '.button-prev-1',
-                                nextEl: '.button-next-1',
+                                prevEl: '.button-prev-2',
+                                nextEl: '.button-next-2',
                             }}
                             modules={[Navigation, Autoplay]}
                             pagination={{
@@ -285,8 +285,8 @@ const Product = () => {
                     )}
                 </div>
                 <div className="product-nav">
-                    <h2 className="product-nav-title">Кино</h2>
-                    <ProductNavButtons buttonClassLeft="button-prev-1" buttonClassRight="button-next-1" />
+                    <h2 className="product-nav-title">Цифровые книги</h2>
+                    <ProductNavButtons buttonClassLeft="button-prev-3" buttonClassRight="button-next-3" />
                 </div>
                 <div className="product-wrapper">
                     {/* Показываем прелоадер, если данные еще загружаются */}
@@ -305,8 +305,8 @@ const Product = () => {
                             onSlideChange={() => console.log('slide change')}
                             onSwiper={(swiper) => console.log(swiper)}
                             navigation={{
-                                prevEl: '.button-prev-1',
-                                nextEl: '.button-next-1',
+                                prevEl: '.button-prev-3',
+                                nextEl: '.button-next-3',
                             }}
                             modules={[Navigation, Autoplay]}
                             pagination={{
