@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay} from 'swiper/modules';
 
@@ -8,7 +10,6 @@ import preload2 from '/preload2.gif'
 import { useState, useEffect } from 'react'
 
 const ProductAudioBook = ({ProductNavButtons, supabase}) => {
-    let swiperInstance;
     const [fetchError, setFetchError] = useState(null);
     const [isLoading, setIsLoading] = useState(true); // Состояние для отслеживания загрузки данных
     const [productFilm, setProductFilm] = useState(null);
@@ -121,7 +122,7 @@ const ProductAudioBook = ({ProductNavButtons, supabase}) => {
                                     <h3 className="product-item-title">{film.productFilmTitle}</h3>
                                     <p className="product-item-desc">{film.product_film_desc}</p>
                                     <p className="product-item-cost">{film.product_film_cost} Р</p>  
-                                    <button className="product-item-btn">В корзину</button>
+                                    <button className="product-item-btn">Купить</button>
                                 </div>
                             </SwiperSlide>
                         ))}

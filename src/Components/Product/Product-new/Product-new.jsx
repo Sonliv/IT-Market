@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react/prop-types */
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay} from 'swiper/modules';
 
@@ -8,8 +10,7 @@ import preload2 from '/preload2.gif'
 import { useState, useEffect } from 'react'
 
 const ProductNew = ({ProductNavButtons, supabase}) => {
-    let swiperInstance;
-    const [fetchError, setFetchError] = useState(null);
+    const [, setFetchError] = useState(null);
     const [isLoading, setIsLoading] = useState(true); // Состояние для отслеживания загрузки данных
     const [productFilm, setProductFilm] = useState(null);
   
@@ -26,7 +27,7 @@ const ProductNew = ({ProductNavButtons, supabase}) => {
             }
   
             if (data) {
-                setProductFilm(data);
+                setProductFilm(data.sort((a,b) => b.id - a.id))
                 setFetchError(null);
                 setIsLoading(false); // Устанавливаем isLoading в false после загрузки данных
             }
@@ -34,8 +35,6 @@ const ProductNew = ({ProductNavButtons, supabase}) => {
   
         fetchProductFilm();
     }, []);
-
-    const reversedProductFilm = productFilm ? [...productFilm].reverse() : null;
 
     return ( 
         <>
@@ -113,7 +112,7 @@ const ProductNew = ({ProductNavButtons, supabase}) => {
                           },
                         }}
                     >
-                        {reversedProductFilm.map((film, index) => (
+                        {productFilm.map((film, index) => (
                             <SwiperSlide key={index}>
                                 <div className="product-item">
                                     <div className="product-item-img-wrapper">
@@ -122,7 +121,7 @@ const ProductNew = ({ProductNavButtons, supabase}) => {
                                     <h3 className="product-item-title">{film.productFilmTitle}</h3>
                                     <p className="product-item-desc">{film.product_film_desc}</p>
                                     <p className="product-item-cost">{film.product_film_cost} Р</p>  
-                                    <button className="product-item-btn">В корзину</button>
+                                    <button className="product-item-btn">Купить</button>
                                 </div>
                             </SwiperSlide>
                         ))}

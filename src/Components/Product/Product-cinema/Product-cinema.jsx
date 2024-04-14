@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay} from 'swiper/modules';
 
@@ -121,7 +123,7 @@ const ProductCinema = ({ProductNavButtons, supabase}) => {
                                     <h3 className="product-item-title">{film.productFilmTitle}</h3>
                                     <p className="product-item-desc">{film.product_film_desc}</p>
                                     <p className="product-item-cost">{film.product_film_cost} Р</p>  
-                                    <button className="product-item-btn">В корзину</button>
+                                    <button className="product-item-btn">Купить</button>
                                 </div>
                             </SwiperSlide>
                         ))}

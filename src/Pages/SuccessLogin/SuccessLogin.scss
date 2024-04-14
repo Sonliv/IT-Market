@@ -2,6 +2,10 @@
 @import '../../reset.scss';
 
 
+.success{
+    margin-bottom: 40px;
+}
+
 // test
 .info-success{
     max-width: 48%;
@@ -107,6 +111,10 @@
             &__text{
                 text-align: center;
             }
+        }
+
+        &.order-success.user {
+            max-height: none;
         }
     }
 }
