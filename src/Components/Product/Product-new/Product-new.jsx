@@ -36,6 +36,9 @@ const ProductNew = ({ProductNavButtons, supabase}) => {
         fetchProductFilm();
     }, []);
 
+    // оплата
+    
+
     return ( 
         <>
             <div className="product-nav">
