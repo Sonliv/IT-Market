@@ -1,8 +1,8 @@
 import './Categories.scss'
-import watch from '/watch.png'
-import play from '/play.png'
-import read from '/read.png'
-import listen from '/listen.png'
+import watch from '/watch.webp'
+import play from '/play.webp'
+import read from '/read.webp'
+import listen from '/listen.webp'
 
 
 
@@ -31,12 +31,6 @@ const Categories = () => {
     return (
         <section className="categories">
             <div className="container">
-                 {/* <div className="categories-wrapper">
-                    <CategoryCard title="Что посмотреть?" desc="Лучшие подписки по выгодным ценам" categoryImg={watch} />
-                    <CategoryCard title="Во что поиграть?" desc="Ключи, коды активации для ваших игр" categoryImg={play} />
-                    <CategoryCard title="Что почитать?" desc="Электронные книги, которые любят наши читатели" categoryImg={read} />
-                    <CategoryCard title="Что Послушать?" desc="Топ подборка от наших слушателей аудиокниг" categoryImg={listen} />
-                </div> */}
                 <Swiper className='categories-swiper'
                     spaceBetween={20}
                     slidesPerView={1.1}
