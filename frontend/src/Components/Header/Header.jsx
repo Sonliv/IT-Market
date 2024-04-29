@@ -32,14 +32,6 @@ const Header = () => {
         getUserName();
     }, []);
 
-    // express
-    // const [expresss, setExpresss] = useState(null)
-
-    // useEffect(() => {
-    //     fetch('/api')
-    //     .then(response => response.json())
-    //     .then(response => setExpresss(response.message))
-    // }, [])
 
     return (
         <header className="header">
@@ -47,26 +39,29 @@ const Header = () => {
                 <div className="header-wrapper">
                     <div className="header-logo-wrapper">
                         <Logo/>
-                        <Link to= {PATHS.ADDPRODUCT} className="header-catalog" >
+                        {/* <Link to= {PATHS.ADDPRODUCT} className="header-catalog" >
                             <span>Добавить товар</span>
-                        </Link>
+                        </Link> */}
                     </div>
                     <form className='header-search' action="#">
                         <input className='header-search-input' placeholder='Яндекс плюс' type="text" />
                         <button className="header-search-button"><img src={searchImg} alt="" /></button>
                     </form>
                     <div className="header-buttons">
-                        <Link to={PATHS.ADDPRODUCT}className="header-buttons-item" >
+                        <Link to={PATHS.FAVORITE}className="header-buttons-item" >
                              <img src={favoriteImg} alt="" />
                             <span>Избранное</span>
-                            {/* <span>{!expresss ? "Loading" : expresss}</span> */}
                         </Link>
-                        <Link to={PATHS.SUCCESS}  className="header-buttons-item">
+                        <Link to={PATHS.ORDERS}  className="header-buttons-item">
                         {/* onClick={toggleMenu} */}
                             <img src={orderImg} alt="" />
                             <span>Заказы</span>
                         </Link>
-                        <Link to={PATHS.LOGIN} className="header-buttons-item header-buttons-item__user">
+                        {/* <Link to={PATHS.LOGIN} className="header-buttons-item header-buttons-item__user">
+                            <img src={userImg} alt="" />
+                            {userName && <span>{userName}</span>}
+                        </Link> */}
+                         <Link to={PATHS.SUCCESS} className="header-buttons-item header-buttons-item__user">
                             <img src={userImg} alt="" />
                             {userName && <span>{userName}</span>}
                         </Link>

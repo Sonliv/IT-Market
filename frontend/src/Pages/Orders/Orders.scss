@@ -1,0 +1,47 @@
+@import url(../../reset.scss);
+
+
+.info-success.orders{
+    max-height: 200px;
+    width: 100%;
+    max-width: 100%;
+}
+
+.success__container.orders{
+    flex-direction: column;
+}
+
+.info-success.order-success.order-page{
+    max-width: 100%;
+}
+
+.info-success__order__wrapper {
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.info-success__order.order-page{
+    width: 49%;
+}
+
+.empty{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+
+@media(max-width: 1080px){
+    .info-success__order.order-page {
+        width: 48%;
+    }  
+}
+
+@media(max-width: 920px){
+    .info-success__order.order-page {
+        width: 100%;
+    }  
+}

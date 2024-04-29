@@ -19,13 +19,18 @@
     border-radius: $border;
 
    &__btn__logout .btn{
-    background-color: rgba(255, 0, 0, 0.962);
+     background-color: rgba(225, 3, 3, 0.962);
+    &:hover{
+        background-color: rgba(255, 0, 0, 0.962);
+    }
    }
 
    &__title{
     text-align: center;
     font-size: 20px;
     margin-bottom: 20px;
+    font-weight: 500;
+    padding: 10px 0;
    }
 
    &__order{
@@ -35,6 +40,7 @@
     padding: 14px;
     border-radius: $border;
     box-shadow: 0 0 14px 5px rgba(228, 227, 227, 0.4);
+    width: 100%;
 
     &__wrapper{
         display: flex;
@@ -42,11 +48,13 @@
         gap: 20px;
     }
 
-    &__img img{
-        height: 100px;
-        width: 100px;
-        border-radius: $border;
-        object-fit: contain;
+    &__img  {        
+        & img{
+            border-radius: $border;
+            height: 100px;
+            width: 100px;
+            object-fit: contain;
+        }
     }
 
     &__text{
@@ -58,9 +66,14 @@
             line-height: 22px;
         }
 
-        &__button .btn{
-            padding: 7px 14px;
-            width: 100%;
+        &__button{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            & .btn{
+                padding: 7px 14px;
+                width: 100%;
+            }
         }
     }
 
