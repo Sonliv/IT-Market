@@ -7,6 +7,7 @@ import { Navigation, Autoplay} from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import preload2 from '/preload2.gif'
+import Favorite from '/favorite.svg'
 import axios from 'axios';
 
 
@@ -16,7 +17,57 @@ const ProductNew = ({ProductNavButtons, supabase}) => {
     const [, setFetchError] = useState(null);
     const [isLoading, setIsLoading] = useState(true); // Состояние для отслеживания загрузки данных
     const [productFilm, setProductFilm] = useState(null);
+    const [isAddingToFavorites, setIsAddingToFavorites] = useState(false); // Добавляем состояние для блокировки кнопки
 
+
+
+    const addToFavorites = async (product) => {
+      try {
+          if (isAddingToFavorites) {
+              return;
+          }
+  
+          setIsAddingToFavorites(true);
+  
+          const { data: existingFavorites, error: existingError } = await supabase
+              .from('favorites')
+              .select()
+              .eq('favorites_id', product.id)
+              .eq('favorites_email', userEmail);
+  
+          if (existingError) {
+              throw existingError;
+          }
+  
+          if (existingFavorites.length > 0) {
+              console.log('Товар уже добавлен в избранное');
+              return;
+          }
+  
+          await supabase
+              .from('favorites')
+              .insert({
+                  favorites_id: product.id,
+                  favorites_title: product.productFilmTitle,
+                  favorites_cost: product.product_film_cost,
+                  favorites_desc: product.product_film_desc,
+                  favorites_img: product.productImage,
+                  favorites_email: userEmail
+              });
+  
+          console.log('Товар добавлен в избранное');
+  
+      } catch (error) {
+          console.error('Ошибка добавления товара в избранное:', error.message);
+      } finally {
+          // Разблокируем кнопку после завершения операции с небольшой задержкой
+          setTimeout(() => {
+              setIsAddingToFavorites(false);
+          }, 3000); // Увеличиваем задержку до 1 секунды
+      }
+  };
+  
+  
     
   
     useEffect(() => {
@@ -174,15 +225,11 @@ const createPayment = async (product) => {
                                     <h3 className="product-item-title">{film.productFilmTitle}</h3>
                                     <p className="product-item-desc">{film.product_film_desc}</p>
                                     <p className="product-item-cost">{film.product_film_cost} Р</p>  
-                                    {/* <button className="product-item-btn">Купить</button> */}
-                                    {/* <button  onClick={createPayment}  className="product-item-btn">Купить</button> */}
-                                    {/* <button onClick={() => createPayment(film.product_film_cost)} className="product-item-btn">Купить</button> */}
-                                    {/* <button onClick={() => createPayment(film)} className="product-item-btn">Купить</button> */}
-                                    {/* <button onClick={() => createPayment({ ...film, product_id: film.id })} className="product-item-btn">Купить</button> */}
-                                    {/* <button onClick={() => createPayment({ ...film, product_id: film.id, product_img: film.productImage })} className="product-item-btn">Купить</button> */}
-                                    <button onClick={() => createPayment({ ...film, product_film_key: film.product_film_key })} className="product-item-btn">Купить</button>
-
-
+                                    {/* <button onClick={() => createPayment({ ...film, product_film_key: film.product_film_key })} className="product-item-btn">Купить</button> */}
+                                    <div className='product-item-btn__wrapper' >
+                                      <button onClick={() => createPayment({ ...film, product_film_key: film.product_film_key })} className="product-item-btn">Купить</button>
+                                      <button onClick={() => addToFavorites(film)}><img src={Favorite} alt="" /></button>
+                                    </div>
                                 </div>
                             </SwiperSlide>
                         ))}
