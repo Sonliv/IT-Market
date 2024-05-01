@@ -1,9 +1,10 @@
+/* eslint-disable react/prop-types */
 import './Categories.scss'
 import watch from '/watch.webp'
 import play from '/play.webp'
 import read from '/read.webp'
 import listen from '/listen.webp'
-
+import { PATHS } from '../../../router'
 
 
 // Import Swiper React components
@@ -14,16 +15,19 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
+import { Link } from 'react-router-dom'
 
 
 
 function CategoryCard(props){
     return(
-        <div className="categories-item">
-            <h4 className="categories-item-title">{props.title}</h4>
-            <p className="categories-item-desc">{props.desc}</p>
-            <img className='categories-item-img' src={props.categoryImg} alt="" />
-        </div>
+      <Link to={props.url} >
+              <div className="categories-item">
+                <h4 className="categories-item-title">{props.title}</h4>
+                <p className="categories-item-desc">{props.desc}</p>
+                <img className='categories-item-img' src={props.categoryImg} alt="" />
+             </div>
+      </Link>
     )
 }
 
@@ -80,10 +84,37 @@ const Categories = () => {
                           },
                       }}
                     >
-                    <SwiperSlide  className='categories-slide'><CategoryCard title="Что посмотреть?" desc="Лучшие подписки по выгодным ценам" categoryImg={watch} /></SwiperSlide>
-                    <SwiperSlide  className='categories-slide'><CategoryCard title="Во что поиграть?" desc="Ключи, коды активации для ваших игр" categoryImg={play} /></SwiperSlide>
-                    <SwiperSlide  className='categories-slide'><CategoryCard title="Что почитать?" desc="Электронные книги, которые любят наши читатели" categoryImg={read} /></SwiperSlide>
-                    <SwiperSlide  className='categories-slide'><CategoryCard title="Что Послушать?" desc="Топ подборка от наших слушателей аудиокниг" categoryImg={listen} /></SwiperSlide>
+                    <SwiperSlide  className='categories-slide'>
+                      <CategoryCard 
+                        title="Что посмотреть?" 
+                        desc="Лучшие подписки по выгодным ценам" 
+                        categoryImg={watch}
+                        url={PATHS.FILM}
+                    /></SwiperSlide>
+                    <SwiperSlide  className='categories-slide'>
+                      <CategoryCard 
+                      title="Во что поиграть?" 
+                      desc="Ключи, коды активации для ваших игр" 
+                      categoryImg={play} 
+                      url={PATHS.GAME}
+                      />
+                    </SwiperSlide>
+                    <SwiperSlide  className='categories-slide'>
+                      <CategoryCard 
+                      title="Что почитать?" 
+                      desc="Электронные книги, которые любят наши читатели" 
+                      categoryImg={read} 
+                      url={PATHS.DIGITAL}
+                      />
+                    </SwiperSlide>
+                    <SwiperSlide  className='categories-slide'>
+                      <CategoryCard 
+                      title="Что Послушать?" 
+                      desc="Топ подборка от наших слушателей аудиокниг" 
+                      categoryImg={listen} 
+                      url={PATHS.AUDIO}
+                      />
+                    </SwiperSlide>
                  </Swiper>
             </div>
         </section>

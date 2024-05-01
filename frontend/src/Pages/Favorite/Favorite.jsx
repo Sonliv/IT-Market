@@ -21,7 +21,7 @@ const Favorite = () => {
                   .from('favorites')
                   .select('*')
                   .order('created_at', { ascending: false })
-                  .limit(15);
+                  // .limit(15);
               if (error) {
                   throw new Error('Ошибка при загрузке избранных');
               }
