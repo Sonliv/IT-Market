@@ -63,7 +63,7 @@ const ProductNew = ({ProductNavButtons, supabase}) => {
           // Разблокируем кнопку после завершения операции с небольшой задержкой
           setTimeout(() => {
               setIsAddingToFavorites(false);
-          }, 3000); // Увеличиваем задержку до 1 секунды
+          }, 1000); // Увеличиваем задержку до 1 секунды
       }
   };
   

@@ -4,7 +4,7 @@ import Logotype from '/logo.svg'
 
 const Logo = () => {
     return (
-        <Link to="/" >
+        <Link to="http://localhost:3000/" >
              <div className="logo">
                  <img src={Logotype} alt="" />
                 <span>ИТ Маркет</span>
