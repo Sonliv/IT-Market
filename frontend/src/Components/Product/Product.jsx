@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import './Product.scss'
 import rightArrow from '/arrow-right.svg'
 import leftArrow from '/arrow-left.svg'

@@ -2,6 +2,8 @@ import './Hero.scss'
 import banner__1 from '/banner__1.webp'
 import banner__3 from '/banner__3.webp'
 import banner__5 from '/banner__5.webp'
+import { PATHS } from '../../../router'
+import { Link } from 'react-router-dom'
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -29,9 +31,21 @@ const Hero = () => {
                         disableOnInteraction: false,
                       }}
                     >
-                    <SwiperSlide><div className="hero-banner-wrapper"><img className='hero-banner' src={banner__1} alt="" /></div></SwiperSlide>
-                    <SwiperSlide><img className='hero-banner' src={banner__5} alt="" /></SwiperSlide>
-                    <SwiperSlide><img className='hero-banner' src={banner__3} alt="" /></SwiperSlide>
+                    <SwiperSlide>
+                        <Link to={PATHS.GAME} > 
+                          <div className="hero-banner-wrapper"><img className='hero-banner' src={banner__1} alt="" /></div>
+                        </Link>
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <Link to={PATHS.DIGITAL}>
+                          <img className='hero-banner' src={banner__5} alt="" />
+                        </Link>
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <Link to={PATHS.FILM}>
+                            <img className='hero-banner' src={banner__3} alt="" />
+                        </Link>
+                    </SwiperSlide>
                  </Swiper>
             </div>
         </section>
