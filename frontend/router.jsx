@@ -9,6 +9,7 @@ import FilmCategory from './src/Pages/PagesCategorys/FilmCategory/FilmCategory';
 import GameCategory from './src/Pages/PagesCategorys/GameCategory/GameCategory';
 import AudioBookCategory from './src/Pages/PagesCategorys/AudioBookCategory/AudioBookCategory';
 import DigitalBookCategory from './src/Pages/PagesCategorys/DigitalBookCategory/DigitalBookCategory ';
+import ProductDetailsPage from './src/Pages/ProductDetailsPage/ProductDetailsPage';
 
 
 export const PATHS = {
@@ -22,6 +23,7 @@ export const PATHS = {
     GAME: '/GameCategory',
     AUDIO: '/AudioBookCategory',
     DIGITAL: '/DigitalBookCategory',
+    DETAILS: '/product/:productId'
 }
 
 export const router = () =>(
@@ -36,5 +38,6 @@ export const router = () =>(
         <Route path={PATHS.GAME} element={<GameCategory/>}/>
         <Route path={PATHS.AUDIO} element={<AudioBookCategory/>}/>
         <Route path={PATHS.DIGITAL} element={<DigitalBookCategory/>}/>
+        <Route path={PATHS.DETAILS} element={<ProductDetailsPage />} />
     </Routes>
 )

@@ -1,17 +1,25 @@
+/* eslint-disable no-unused-vars */
 
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay} from 'swiper/modules';
+import { Link } from 'react-router-dom';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
 import preload2 from '/preload2.gif'
 import Favorite from '/favorite.svg'
 import axios from 'axios';
-
-
 import { useState, useEffect } from 'react'
+import { createClient } from '@supabase/supabase-js';
+
+
+const supabase = createClient(
+  'https://poprpfzqyzbmsbhtvvjw.supabase.co', 
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBvcHJwZnpxeXpibXNiaHR2dmp3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTE3MDYzMTEsImV4cCI6MjAyNzI4MjMxMX0.wMh3igzPTekhCkRSWyknGW2YEJII8JJH_8PvYnu3hXo' // API Key
+);
+
 
 const ProductNew = ({ProductNavButtons, supabase}) => {
     const [, setFetchError] = useState(null);
@@ -133,11 +141,7 @@ const createPayment = async (product) => {
 };
 
 
-
-
-
-
-
+// Детали товара
 
   
     return ( 
@@ -218,14 +222,27 @@ const createPayment = async (product) => {
                     >
                         {productFilm.map((film, index) => (
                             <SwiperSlide key={index}>
-                                <div className="product-item">
+                                {/* <div className="product-item">
                                     <div className="product-item-img-wrapper">
                                         <img className="product-item-img" src={film.productImage} alt="" />
                                     </div>
                                     <h3 className="product-item-title">{film.productFilmTitle}</h3>
                                     <p className="product-item-desc">{film.product_film_desc}</p>
                                     <p className="product-item-cost">{film.product_film_cost} Р</p>  
-                                    {/* <button onClick={() => createPayment({ ...film, product_film_key: film.product_film_key })} className="product-item-btn">Купить</button> */}
+                                    <div className='product-item-btn__wrapper' >
+                                      <button onClick={() => createPayment({ ...film, product_film_key: film.product_film_key })} className="product-item-btn">Купить</button>
+                                      <button onClick={() => addToFavorites(film)}><img src={Favorite} alt="" /></button>
+                                    </div>
+                                </div> */}
+                                <div className="product-item">
+                                <Link to={`/product/${film.id}`} className="product-item-link" >
+                                    <div className="product-item-img-wrapper">
+                                        <img className="product-item-img" src={film.productImage} alt="" />
+                                    </div>
+                                    <h3 className="product-item-title">{film.productFilmTitle}</h3>
+                                    <p className="product-item-desc">{film.product_film_desc}</p>
+                                    <p className="product-item-cost">{film.product_film_cost} Р</p>  
+                                    </Link>
                                     <div className='product-item-btn__wrapper' >
                                       <button onClick={() => createPayment({ ...film, product_film_key: film.product_film_key })} className="product-item-btn">Купить</button>
                                       <button onClick={() => addToFavorites(film)}><img src={Favorite} alt="" /></button>
