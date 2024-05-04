@@ -1,13 +1,14 @@
+/* eslint-disable no-unused-vars */
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
-import Favorite from '/favorite.svg'; // Подставьте корректный путь к изображению Favorite
+// import Favorite from '/favorite.svg'; 
 import profile from '/user.svg'
 import './ProductDetailsPage.scss'
 import { createClient } from '@supabase/supabase-js';
 import { Link } from 'react-router-dom';
 import ArrowUrl from '/arrow_right_url.webp'
 import BaseBtn from '../../Components/Base/BaseBtn/BaseBtn';
+import ShareImg from '/share_offer.webp'
 
 const supabase = createClient(
     'https://poprpfzqyzbmsbhtvvjw.supabase.co', 
@@ -123,11 +124,11 @@ const formatText = (text) => {
                               <img src={ArrowUrl} alt="" />
                             </li>
                             <li className="detail__info__nav__item">
-                             <Link>Кино</Link>
+                             <Link>{productFilm.product_film_category}</Link>
                              <img src={ArrowUrl} alt="" />
                             </li>
                             <li className="detail__info__nav__item">
-                              <Link>ID 4545</Link> 
+                              <Link>ID {productFilm.id}</Link> 
                             </li>
                           </ul>
                         </nav>
@@ -144,6 +145,9 @@ const formatText = (text) => {
                         <BaseBtn BtnText="Купить" />
                         <div className='detail__payment__button' > 
                          <BaseBtn BtnText="В избранное" />
+                        </div>
+                        <div className='detail__payment__button__share' >
+                         <BaseBtn BtnText={<><span>Поделиться</span> <img src={ShareImg} alt="" /></>}/>
                         </div>
                       </div>
                     </div>

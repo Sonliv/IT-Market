@@ -1,4 +1,4 @@
-# React + Vite + Supabase.
+# React + Vite + Supabase + Express + Docker
 
 1) npm i 
 
