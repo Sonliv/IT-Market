@@ -9,6 +9,11 @@ import ArrowUrl from '/arrow_right_url.webp';
 import BaseBtn from '../../Components/Base/BaseBtn/BaseBtn';
 import ShareImg from '/share_offer.webp';
 import ShareModal from '../../Components/ShareModal/ShareModal';
+import { PATHS } from '../../../router';
+import UseFavorites from './UseFavorites'; // Исправлено на UseFavorites
+
+
+
 
 const supabase = createClient(
     'https://poprpfzqyzbmsbhtvvjw.supabase.co', 
@@ -22,8 +27,12 @@ const ProductDetailsPage = () => {
   const [productFilm, setProductFilm] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [userEmail, setUserEmail] = useState('');
-  const [isAddingToFavorites, setIsAddingToFavorites] = useState(false); // Добавляем состояние для блокировки кнопки
+  // const [isAddingToFavorites, setIsAddingToFavorites] = useState(false); // Добавляем состояние для блокировки кнопки
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+
+  
+  const { addToFavorites } = UseFavorites(); // Исправлено на UseFavorites
 
   // Функция для открытия модального окна
 const openModal = () => {
@@ -123,51 +132,51 @@ const closeModal = () => {
 
   // favorite
 
-  const addToFavorites = async (product) => {
-    try {
-        if (isAddingToFavorites) {
-            return;
-        }
+//   const addToFavorites = async (product) => {
+//     try {
+//         if (isAddingToFavorites) {
+//             return;
+//         }
 
-        setIsAddingToFavorites(true);
+//         setIsAddingToFavorites(true);
 
-        const { data: existingFavorites, error: existingError } = await supabase
-            .from('favorites')
-            .select()
-            .eq('favorites_id', product.id)
-            .eq('favorites_email', userEmail);
+//         const { data: existingFavorites, error: existingError } = await supabase
+//             .from('favorites')
+//             .select()
+//             .eq('favorites_id', product.id)
+//             .eq('favorites_email', userEmail);
 
-        if (existingError) {
-            throw existingError;
-        }
+//         if (existingError) {
+//             throw existingError;
+//         }
 
-        if (existingFavorites.length > 0) {
-            console.log('Товар уже добавлен в избранное');
-            return;
-        }
+//         if (existingFavorites.length > 0) {
+//             console.log('Товар уже добавлен в избранное');
+//             return;
+//         }
 
-        await supabase
-            .from('favorites')
-            .insert({
-                favorites_id: product.id,
-                favorites_title: product.productFilmTitle,
-                favorites_cost: product.product_film_cost,
-                favorites_desc: product.product_film_desc,
-                favorites_img: product.productImage,
-                favorites_email: userEmail
-            });
+//         await supabase
+//             .from('favorites')
+//             .insert({
+//                 favorites_id: product.id,
+//                 favorites_title: product.productFilmTitle,
+//                 favorites_cost: product.product_film_cost,
+//                 favorites_desc: product.product_film_desc,
+//                 favorites_img: product.productImage,
+//                 favorites_email: userEmail
+//             });
 
-        console.log('Товар добавлен в избранное');
+//         console.log('Товар добавлен в избранное');
 
-    } catch (error) {
-        console.error('Ошибка добавления товара в избранное:', error.message);
-    } finally {
-        // Разблокируем кнопку после завершения операции с небольшой задержкой
-        setTimeout(() => {
-            setIsAddingToFavorites(false);
-        }, 1000); // Увеличиваем задержку до 1 секунды
-    }
-};
+//     } catch (error) {
+//         console.error('Ошибка добавления товара в избранное:', error.message);
+//     } finally {
+//         // Разблокируем кнопку после завершения операции с небольшой задержкой
+//         setTimeout(() => {
+//             setIsAddingToFavorites(false);
+//         }, 1000); // Увеличиваем задержку до 1 секунды
+//     }
+// };
 
   // payment hide
 function PaymentHide(){
@@ -215,6 +224,38 @@ function PaymentHide(){
   )
 }
 
+  // function urlCategory(){
+  //   let urlCategory = "2"
+  //   if (productFilm.product_film_category == "Кино"){
+  //     urlCategory = "FilmCategory"
+  //   }
+  // }
+
+  function urlCategory() {
+    let urlCategory = "GameCategory"; 
+    console.log("Product Film Category:", productFilm.product_film_category);
+    
+    const category = productFilm.product_film_category.toLowerCase(); // Приводим к нижнему регистру для сравнения
+    
+    if (category === "кино") {
+      urlCategory = "FilmCategory";
+    }
+    if (category === "игры"){
+      urlCategory = "GameCategory";
+    }
+    if (category === "книги"){
+      urlCategory = "DigitalBookCategory";
+    }
+    if (category === "аудио книги"){
+      urlCategory = "AudioBookCategory";
+    }
+    console.log("URL Category:", urlCategory);
+    
+    return urlCategory;
+}
+
+  
+
   return (
     <>
         <section className='detail first-element'>
@@ -239,22 +280,17 @@ function PaymentHide(){
                               <img src={ArrowUrl} alt="" />
                             </li>
                             <li className="detail__info__nav__item">
-                              <Link>Каталог</Link>
-                              <img src={ArrowUrl} alt="" />
-                            </li>
-                            <li className="detail__info__nav__item">
-                             <Link>{productFilm.product_film_category}</Link>
+                             <Link target='_blank' to={`http://localhost:3000/${urlCategory()}`}>{productFilm.product_film_category}</Link>
                              <img src={ArrowUrl} alt="" />
                             </li>
                             <li className="detail__info__nav__item">
-                              <Link>ID {productFilm.id}</Link> 
+                              <Link target='_blank' to={`http://localhost:3000/product/${productFilm.id}`} >ID {productFilm.id}</Link> 
                             </li>
                           </ul>
                         </nav>
                         <h2 className="detail__info__title">{productFilm.productFilmTitle}</h2>
                         <div className="detail__info__desc">
                           <h3 className="detail__info__desc__title">Описание</h3>
-                          {/* Используем функцию форматирования для отображения текста */}
                           <div className="detail__info__desc__text">{formatText(productFilm.product_film_desc)}</div>
                         </div>
                     </div>

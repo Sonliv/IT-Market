@@ -222,18 +222,6 @@ const createPayment = async (product) => {
                     >
                         {productFilm.map((film, index) => (
                             <SwiperSlide key={index}>
-                                {/* <div className="product-item">
-                                    <div className="product-item-img-wrapper">
-                                        <img className="product-item-img" src={film.productImage} alt="" />
-                                    </div>
-                                    <h3 className="product-item-title">{film.productFilmTitle}</h3>
-                                    <p className="product-item-desc">{film.product_film_desc}</p>
-                                    <p className="product-item-cost">{film.product_film_cost} Р</p>  
-                                    <div className='product-item-btn__wrapper' >
-                                      <button onClick={() => createPayment({ ...film, product_film_key: film.product_film_key })} className="product-item-btn">Купить</button>
-                                      <button onClick={() => addToFavorites(film)}><img src={Favorite} alt="" /></button>
-                                    </div>
-                                </div> */}
                                 <div className="product-item">
                                 <Link to={`/product/${film.id}`} className="product-item-link" >
                                     <div className="product-item-img-wrapper">

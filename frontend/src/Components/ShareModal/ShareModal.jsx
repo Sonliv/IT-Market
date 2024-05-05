@@ -13,10 +13,15 @@ const ShareModal = ({ onClose, productUrl, productName }) => {
   };
 
   const handleClickOutside = (event) => {
-    if (modalRef.current && !modalRef.current.contains(event.target)) {
+    if (
+      modalRef.current && 
+      !modalRef.current.contains(event.target) &&
+      !event.target.closest('.modal')
+    ) {
       onClose();
     }
   };
+  
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
@@ -40,13 +45,17 @@ const ShareModal = ({ onClose, productUrl, productName }) => {
         <p className='modal__share__desc' >Скопируйте ссылку ниже и отправьте ее друзьям:</p>
         <div className='modal__share__input__wrapper' > 
           <input className='modal__share__input' type="text" value={productUrl} readOnly />
-          <button onClick={copyToClipboard}><img src={CopyLink} alt="" /></button>
+          <button className='share__hide' onClick={copyToClipboard}><img src={CopyLink} alt="" /></button>
         </div>
-        {copySuccess && <span className="copy-success">Ссылка скопирована!</span>}
-        <button className='modal__share__social__link'  onClick={openTelegram}>
-          {/* <p>Поделиться в Telegram :</p> */}
-          <img src={TgLogo} alt="" />
-        </button>
+        {copySuccess && <p className="copy-success">Ссылка скопирована!</p>}
+        <div className='share__buttons' >
+          <button className='modal__share__social__link'  onClick={openTelegram}>
+            <img src={TgLogo} alt="" />
+          </button>
+          <button className='share__reveal' onClick={copyToClipboard}>
+            <img src={CopyLink} alt="" />
+            </button>
+        </div>
       </div>
     </div>
   );
