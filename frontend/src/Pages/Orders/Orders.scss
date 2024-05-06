@@ -1,5 +1,15 @@
-@import url(../../reset.scss);
+@import '../../reset.scss';
 
+.info-success__title.order__custom{
+    font-size: 22px;
+    margin-bottom: 40px;
+    font-weight: normal;
+
+    & span{
+        color: $color-blue;
+        font-weight: 500;
+    }
+}
 
 .info-success.orders{
     max-height: 200px;

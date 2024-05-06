@@ -1,13 +1,11 @@
 import { useState } from 'react';
-import { createClient } from "@supabase/supabase-js";
-
-const supabase = createClient(
-    'https://poprpfzqyzbmsbhtvvjw.supabase.co', 
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBvcHJwZnpxeXpibXNiaHR2dmp3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTE3MDYzMTEsImV4cCI6MjAyNzI4MjMxMX0.wMh3igzPTekhCkRSWyknGW2YEJII8JJH_8PvYnu3hXo'
-);
+import { supabase } from '../../supabase';
+import GetEmailAvatar from '../../GetEmailAvatar';
 
 const UseFavorites = () => {
   const [isAddingToFavorites, setIsAddingToFavorites] = useState(false);
+  // const [userEmail, setUserEmail] = useState('');
+  
 
   const addToFavorites = async (product, userEmail) => {
     try {

@@ -1,24 +1,16 @@
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import axios from 'axios'; // Add this import
-import profile from '/user.svg';
 import './ProductDetailsPage.scss';
-import { createClient } from '@supabase/supabase-js';
 import { Link } from 'react-router-dom';
 import ArrowUrl from '/arrow_right_url.webp';
 import BaseBtn from '../../Components/Base/BaseBtn/BaseBtn';
 import ShareImg from '/share_offer.webp';
 import ShareModal from '../../Components/ShareModal/ShareModal';
-import { PATHS } from '../../../router';
-import UseFavorites from './UseFavorites'; // Исправлено на UseFavorites
+import UseFavorites from './UseFavorites'; 
+import CreatePayment from '../../CreatePayment';
+import { supabase } from '../../supabase';
+// import GetEmailAvatar from '../../GetEmailAvatar';
 
-
-
-
-const supabase = createClient(
-    'https://poprpfzqyzbmsbhtvvjw.supabase.co', 
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBvcHJwZnpxeXpibXNiaHR2dmp3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTE3MDYzMTEsImV4cCI6MjAyNzI4MjMxMX0.wMh3igzPTekhCkRSWyknGW2YEJII8JJH_8PvYnu3hXo' // API Key
-);
 
 
 const ProductDetailsPage = () => {
@@ -27,12 +19,13 @@ const ProductDetailsPage = () => {
   const [productFilm, setProductFilm] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [userEmail, setUserEmail] = useState('');
-  // const [isAddingToFavorites, setIsAddingToFavorites] = useState(false); // Добавляем состояние для блокировки кнопки
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  // favorite
+  const { addToFavorites } = UseFavorites();
+  // Use the CreatePayment component here
+  const { createPayment } = CreatePayment();
 
-  
-  const { addToFavorites } = UseFavorites(); // Исправлено на UseFavorites
 
   // Функция для открытия модального окна
 const openModal = () => {
@@ -68,16 +61,20 @@ const closeModal = () => {
     fetchProductFilm();
   }, [supabase, productId]);
 
-  useEffect(() => {
-    // Получение userEmail
-    supabase.auth.onAuthStateChange((event, session) => {
-      if (session) {
-        setUserEmail(session.user.email);
-      } else {
-        setUserEmail("Имя");
-      }
-    });
-  }, []);
+   // Создайте состояние для userImage
+   const [userImage, setUserImage] = useState('');
+
+   useEffect(() => {
+     // Получение userEmail
+     supabase.auth.onAuthStateChange((event, session) => {
+       if (session) {
+         setUserEmail(session.user.email);
+         setUserImage(session.user.user_metadata.avatar_url); // Установите userImage здесь
+       } else {
+         setUserEmail("Имя");
+       }
+     });
+   }, []);
 
   // Функция форматирования текста
   const formatText = (text) => {
@@ -99,27 +96,7 @@ const closeModal = () => {
     return formattedText;
   };
 
-  const createPayment = async (product) => {
-    try {
-        console.log('userEmail:', userEmail);
-        const response = await axios.post('http://localhost:3001/create-payment', {
-              productName: product.productFilmTitle,
-              price: product.product_film_cost,
-              userEmail: userEmail,
-              product_id: product.id,
-              product_img: product.productImage,
-              product_film_key: product.product_film_key
-        });
 
-        if (!response.data.paymentUrl) {
-            throw new Error('Не удалось получить URL для оплаты');
-        }
-
-        window.open(response.data.paymentUrl, '_blank');
-    } catch (error) {
-        console.error('Ошибка создания платежа:', error.message);
-    }
-  };
 
   // условия
   if (isLoading) {
@@ -130,53 +107,6 @@ const closeModal = () => {
     return <div>Товар не найден</div>;
   }
 
-  // favorite
-
-//   const addToFavorites = async (product) => {
-//     try {
-//         if (isAddingToFavorites) {
-//             return;
-//         }
-
-//         setIsAddingToFavorites(true);
-
-//         const { data: existingFavorites, error: existingError } = await supabase
-//             .from('favorites')
-//             .select()
-//             .eq('favorites_id', product.id)
-//             .eq('favorites_email', userEmail);
-
-//         if (existingError) {
-//             throw existingError;
-//         }
-
-//         if (existingFavorites.length > 0) {
-//             console.log('Товар уже добавлен в избранное');
-//             return;
-//         }
-
-//         await supabase
-//             .from('favorites')
-//             .insert({
-//                 favorites_id: product.id,
-//                 favorites_title: product.productFilmTitle,
-//                 favorites_cost: product.product_film_cost,
-//                 favorites_desc: product.product_film_desc,
-//                 favorites_img: product.productImage,
-//                 favorites_email: userEmail
-//             });
-
-//         console.log('Товар добавлен в избранное');
-
-//     } catch (error) {
-//         console.error('Ошибка добавления товара в избранное:', error.message);
-//     } finally {
-//         // Разблокируем кнопку после завершения операции с небольшой задержкой
-//         setTimeout(() => {
-//             setIsAddingToFavorites(false);
-//         }, 1000); // Увеличиваем задержку до 1 секунды
-//     }
-// };
 
   // payment hide
 function PaymentHide(){
@@ -187,7 +117,7 @@ function PaymentHide(){
     <div onClick={() => createPayment({ ...productFilm, product_film_key: productFilm.product_film_key })} >
         <BaseBtn   BtnText="Купить" />
       </div>
-      <div onClick={() => addToFavorites(productFilm)} className='detail__payment__button' > 
+      <div onClick={() => addToFavorites(productFilm, userEmail)} className='detail__payment__button' > 
         <BaseBtn BtnText="В избранное" />
     </div>
     <div onClick={openModal} className='detail__payment__button__share'>
@@ -210,7 +140,7 @@ function PaymentHide(){
       <div  onClick={() => createPayment({ ...productFilm, product_film_key: productFilm.product_film_key })} >
         <BaseBtn   BtnText="Купить" />
       </div>
-      <div onClick={() => addToFavorites(productFilm)} className='detail__payment__button' > 
+      <div onClick={() => addToFavorites(productFilm, userEmail)} className='detail__payment__button' > 
     <BaseBtn BtnText="В избранное" />
   </div>
   <div onClick={openModal} className='detail__payment__button__share'>
@@ -224,12 +154,6 @@ function PaymentHide(){
   )
 }
 
-  // function urlCategory(){
-  //   let urlCategory = "2"
-  //   if (productFilm.product_film_category == "Кино"){
-  //     urlCategory = "FilmCategory"
-  //   }
-  // }
 
   function urlCategory() {
     let urlCategory = "GameCategory"; 
@@ -243,13 +167,13 @@ function PaymentHide(){
     if (category === "игры"){
       urlCategory = "GameCategory";
     }
-    if (category === "книги"){
+    if (category === "электронные книги"){
       urlCategory = "DigitalBookCategory";
     }
     if (category === "аудио книги"){
       urlCategory = "AudioBookCategory";
     }
-    console.log("URL Category:", urlCategory);
+    // console.log("URL Category:", urlCategory);
     
     return urlCategory;
 }
@@ -266,9 +190,11 @@ function PaymentHide(){
                             <img src={productFilm.productImage} alt="" />
                         </div>
                         <div className="detail__short__seller">
-                            <img src="https://lh3.googleusercontent.com/a/ACg8ocLJtpwmuWbUNyXtmM1u2wKSHZP1cQl3rcTCR9a1UoOf7eJ1wNw=s96-c" 
+                            {/* <img src="https://lh3.googleusercontent.com/a/ACg8ocLJtpwmuWbUNyXtmM1u2wKSHZP1cQl3rcTCR9a1UoOf7eJ1wNw=s96-c" 
+                            alt="" className="detail__short__seller__img" /> */}
+                            <img src={productFilm.product_film_seller_avatar} 
                             alt="" className="detail__short__seller__img" />
-                            <span className="detail__short__seller__mail">dmitrynairov@yandex.ru</span>
+                            <span className="detail__short__seller__mail">{productFilm.product_film_seller_email}</span>
                         </div>
                         <PaymentReveal/>
                     </div>

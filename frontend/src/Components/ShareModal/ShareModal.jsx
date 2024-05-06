@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import React, { useState, useRef, useEffect } from 'react';
 import './ShareModal.scss'; // Подключаем стили модального окна
 import CopyLink from '/copy__link.webp';

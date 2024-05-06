@@ -9,73 +9,18 @@ import { Link } from 'react-router-dom';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import preload2 from '/preload2.gif'
-import Favorite from '/favorite.svg'
-import axios from 'axios';
 import { useState, useEffect } from 'react'
-import { createClient } from '@supabase/supabase-js';
+// import CreatePayment from '../../../Pages/ProductDetailsPage/CreatePayment';
+import CreatePayment from '../../../CreatePayment';
 
 
-const supabase = createClient(
-  'https://poprpfzqyzbmsbhtvvjw.supabase.co', 
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBvcHJwZnpxeXpibXNiaHR2dmp3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTE3MDYzMTEsImV4cCI6MjAyNzI4MjMxMX0.wMh3igzPTekhCkRSWyknGW2YEJII8JJH_8PvYnu3hXo' // API Key
-);
 
 
 const ProductNew = ({ProductNavButtons, supabase}) => {
     const [, setFetchError] = useState(null);
     const [isLoading, setIsLoading] = useState(true); // Состояние для отслеживания загрузки данных
     const [productFilm, setProductFilm] = useState(null);
-    const [isAddingToFavorites, setIsAddingToFavorites] = useState(false); // Добавляем состояние для блокировки кнопки
-
-
-
-    const addToFavorites = async (product) => {
-      try {
-          if (isAddingToFavorites) {
-              return;
-          }
-  
-          setIsAddingToFavorites(true);
-  
-          const { data: existingFavorites, error: existingError } = await supabase
-              .from('favorites')
-              .select()
-              .eq('favorites_id', product.id)
-              .eq('favorites_email', userEmail);
-  
-          if (existingError) {
-              throw existingError;
-          }
-  
-          if (existingFavorites.length > 0) {
-              console.log('Товар уже добавлен в избранное');
-              return;
-          }
-  
-          await supabase
-              .from('favorites')
-              .insert({
-                  favorites_id: product.id,
-                  favorites_title: product.productFilmTitle,
-                  favorites_cost: product.product_film_cost,
-                  favorites_desc: product.product_film_desc,
-                  favorites_img: product.productImage,
-                  favorites_email: userEmail
-              });
-  
-          console.log('Товар добавлен в избранное');
-  
-      } catch (error) {
-          console.error('Ошибка добавления товара в избранное:', error.message);
-      } finally {
-          // Разблокируем кнопку после завершения операции с небольшой задержкой
-          setTimeout(() => {
-              setIsAddingToFavorites(false);
-          }, 1000); // Увеличиваем задержку до 1 секунды
-      }
-  };
-  
-  
+    const { createPayment } = CreatePayment();   // оплата
     
   
     useEffect(() => {
@@ -99,49 +44,6 @@ const ProductNew = ({ProductNavButtons, supabase}) => {
   
         fetchProductFilm();
     }, []);
-
-
-// оплата
-
-const [userEmail, setUserEmail] = useState('');
-
-useEffect(() => {
-  // Ваш код для получения userEmail, например, из supabase
-  supabase.auth.onAuthStateChange((event, session) => {
-    if (session) {
-      setUserEmail(session.user.email);
-    } else {
-      setUserEmail("Имя");
-    }
-  });
-}, []);
-
-
-
-const createPayment = async (product) => {
-  try {
-      console.log('userEmail:', userEmail);
-      const response = await axios.post('http://localhost:3001/create-payment', {
-            productName: product.productFilmTitle,
-            price: product.product_film_cost,
-            userEmail: userEmail,
-            product_id: product.id,
-            product_img: product.productImage,
-            product_film_key: product.product_film_key
-      });
-
-      if (!response.data.paymentUrl) {
-          throw new Error('Не удалось получить URL для оплаты');
-      }
-
-      window.open(response.data.paymentUrl, '_blank');
-  } catch (error) {
-      console.error('Ошибка создания платежа:', error.message);
-  }
-};
-
-
-// Детали товара
 
   
     return ( 
@@ -231,10 +133,7 @@ const createPayment = async (product) => {
                                     <p className="product-item-desc">{film.product_film_desc}</p>
                                     <p className="product-item-cost">{film.product_film_cost} Р</p>  
                                     </Link>
-                                    <div className='product-item-btn__wrapper' >
-                                      <button onClick={() => createPayment({ ...film, product_film_key: film.product_film_key })} className="product-item-btn">Купить</button>
-                                      <button onClick={() => addToFavorites(film)}><img src={Favorite} alt="" /></button>
-                                    </div>
+                                    <button onClick={() => createPayment({ ...film, product_film_key: film.product_film_key })} className="product-item-btn">Купить</button>
                                 </div>
                             </SwiperSlide>
                         ))}
