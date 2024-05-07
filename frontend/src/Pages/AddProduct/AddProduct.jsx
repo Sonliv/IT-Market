@@ -1,31 +1,42 @@
-import  { useState } from 'react';
+import { useState, useEffect } from 'react';
 import BaseBtn from '../../Components/Base/BaseBtn/BaseBtn';
-import './AddProduct.scss'; // Подключаем стили
+import './AddProduct.scss';
 import { useNavigate } from 'react-router-dom';
-import { createClient } from '@supabase/supabase-js';
-import { PATHS } from '../../../router'
+import { PATHS } from '../../../router';
+import { supabase } from '../../supabase';
+import GetEmailAvatar from '../../GetEmailAvatar';
 
 const AddProduct = () => {
-    const supabase = createClient(
-        'https://poprpfzqyzbmsbhtvvjw.supabase.co',
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBvcHJwZnpxeXpibXNiaHR2dmp3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTE3MDYzMTEsImV4cCI6MjAyNzI4MjMxMX0.wMh3igzPTekhCkRSWyknGW2YEJII8JJH_8PvYnu3hXo'
-    );
-
     const navigate = useNavigate();
 
     const [productFilmTitle, setProductFilmTitle] = useState('');
     const [productFilmDesc, setProductFilmDesc] = useState('');
     const [productFilmCost, setProductFilmCost] = useState('');
     const [productFilmCategory, setProductFilmCategory] = useState('');
-    const [productFilmKey, setProductFilmKey] = useState(''); // Новое состояние для ключа товара
+    const [productFilmKey, setProductFilmKey] = useState('');
     const [formError, setFormError] = useState('');
     const [productImageURL, setProductImageURL] = useState('');
-    const [isUploading, setIsUploading] = useState(false); // Track image uploading state
+    const [isUploading, setIsUploading] = useState(false);
+    const [sellerEmail, setSellerEmail] = useState('');
+    const [sellerAvatar, setSellerAvatar] = useState('');
+
+    useEffect(() => {
+        const getUserEmail = () => {
+            supabase.auth.onAuthStateChange((event, session) => {
+                if (session) {
+                    setSellerEmail(session.user.email || '');
+                } else {
+                    setSellerEmail('');
+                }
+            });
+        };
+        getUserEmail();
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!productFilmTitle || !productFilmDesc || !productFilmCost || !productImageURL || !productFilmCategory || !productFilmKey) { // Обновлено: добавлено условие для проверки наличия ключа товара
+        if (!productFilmTitle || !productFilmDesc || !productFilmCost || !productImageURL || !productFilmCategory || !productFilmKey) {
             setFormError(<p className="test">Произошла ошибка. Заполните все поля и добавьте изображение и ключ товара</p>);
             scrollToError();
             return;
@@ -46,8 +57,10 @@ const AddProduct = () => {
                 product_film_desc: productFilmDesc,
                 product_film_cost: productFilmCost,
                 product_film_category: productFilmCategory,
-                product_film_key: productFilmKey, // Обновлено: добавлено поле для ключа товара
-                productImage: productImageURL
+                product_film_key: productFilmKey,
+                productImage: productImageURL,
+                product_film_seller_avatar: sellerAvatar, // Устанавливаем аватарку продавца
+                product_film_seller_email: sellerEmail
             }
         ]).select();
 
@@ -59,12 +72,10 @@ const AddProduct = () => {
             console.log(data);
             navigate(PATHS.HOME);
         }
-
-        console.log(productFilmCategory)
     };
 
     const handleImageUpload = async (e) => {
-        setIsUploading(true); // Set uploading state to true when starting upload
+        setIsUploading(true);
         const file = e.target.files[0];
         const fileName = `${file.name}_${Date.now()}`;
         const { error } = await supabase.storage.from('product_img').upload(fileName, file);
@@ -77,12 +88,10 @@ const AddProduct = () => {
             setProductImageURL(`https://poprpfzqyzbmsbhtvvjw.supabase.co/storage/v1/object/public/product_img/${fileName}`);
             setFormError('');
         }
-        // After 3 seconds, reset uploading state
         setTimeout(() => {
             setIsUploading(false);
         }, 3000);
     };
-    
 
     return (
         <>
@@ -137,18 +146,18 @@ const AddProduct = () => {
                         <div>
                             <label className='add-product__title' htmlFor="productFilmCategory">Категория:</label>
                             <div className='add-product__select__container' >  
-                            <select
-                                id='productFilmCategory'
-                                className='add-product__select'
-                                value={productFilmCategory}
-                                onChange={(e) => setProductFilmCategory(e.target.value)}
-                            >
-                                <option value="">Выберите категорию</option>
-                                <option value="Кино">Кино</option>
-                                <option value="Игры">Игры</option>
-                                <option value="Аудио Книги">Аудио Книги</option>
-                                <option value="Электронные книги">Электронные книги</option>
-                            </select>
+                                <select
+                                    id='productFilmCategory'
+                                    className='add-product__select'
+                                    value={productFilmCategory}
+                                    onChange={(e) => setProductFilmCategory(e.target.value)}
+                                >
+                                    <option value="">Выберите категорию</option>
+                                    <option value="Кино">Кино</option>
+                                    <option value="Игры">Игры</option>
+                                    <option value="Аудио Книги">Аудио Книги</option>
+                                    <option value="Электронные книги">Электронные книги</option>
+                                </select>
                             </div>
                         </div>
 
@@ -179,3 +188,5 @@ const AddProduct = () => {
 }
 
 export default AddProduct;
+
+

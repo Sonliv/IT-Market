@@ -9,6 +9,7 @@ import ShareModal from '../../Components/ShareModal/ShareModal';
 import UseFavorites from './UseFavorites'; 
 import CreatePayment from '../../CreatePayment';
 import { supabase } from '../../supabase';
+import userImg from '/user.svg'
 // import GetEmailAvatar from '../../GetEmailAvatar';
 
 
@@ -190,12 +191,14 @@ function PaymentHide(){
                             <img src={productFilm.productImage} alt="" />
                         </div>
                         <div className="detail__short__seller">
-                            {/* <img src="https://lh3.googleusercontent.com/a/ACg8ocLJtpwmuWbUNyXtmM1u2wKSHZP1cQl3rcTCR9a1UoOf7eJ1wNw=s96-c" 
-                            alt="" className="detail__short__seller__img" /> */}
-                            <img src={productFilm.product_film_seller_avatar} 
-                            alt="" className="detail__short__seller__img" />
-                            <span className="detail__short__seller__mail">{productFilm.product_film_seller_email}</span>
-                        </div>
+                          {productFilm.product_film_seller_avatar ? (
+                              <img src={productFilm.product_film_seller_avatar} alt="" className="detail__short__seller__img" />
+                          ) : (
+                              <img src={userImg} alt="User Avatar" className="detail__short__seller__img" />
+                          )}
+                          <span className="detail__short__seller__mail">{productFilm.product_film_seller_email}</span>
+                      </div>
+
                         <PaymentReveal/>
                     </div>
                     <div className="detail__info">
