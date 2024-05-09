@@ -7,6 +7,8 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import preload2 from '/preload2.gif'
 
+import CreatePayment from '../../../CreatePayment';
+
 import { useState, useEffect } from 'react'
 
 const ProductAudioBook = ({ProductNavButtons, supabase}) => {
@@ -36,6 +38,10 @@ const ProductAudioBook = ({ProductNavButtons, supabase}) => {
   
         fetchProductFilm();
     }, []);
+
+    const { createPayment } = CreatePayment();   // оплата
+
+
 
     return ( 
         <>
@@ -122,7 +128,7 @@ const ProductAudioBook = ({ProductNavButtons, supabase}) => {
                                     <h3 className="product-item-title">{film.productFilmTitle}</h3>
                                     <p className="product-item-desc">{film.product_film_desc}</p>
                                     <p className="product-item-cost">{film.product_film_cost} Р</p>  
-                                    <button className="product-item-btn">Купить</button>
+                                    <button onClick={() => createPayment({ ...film, product_film_key: film.product_film_key })} className="product-item-btn">Купить</button>
                                 </div>
                             </SwiperSlide>
                         ))}

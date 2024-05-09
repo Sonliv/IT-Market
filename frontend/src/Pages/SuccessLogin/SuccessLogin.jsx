@@ -116,32 +116,6 @@ const SuccessLogin = () => {
                                 </div>
                             </div>
                         )}
-                        {/* <div className="info-success order-success">
-                            <div className="info-success__title">Заказы</div>
-                            <div className="info-success__order__wrapper">
-                                {isLoading ? (
-                                    <img src={preload2} alt="Loading..." />
-                                ) : fetchError ? (
-                                    <div>{fetchError}</div>
-                                ) : (
-                                    <div className="info-success__order__wrapper">
-                                        {orders.map((order, index) => (
-                                            <div key={index} className="info-success__order">
-                                                <div className="info-success__order__img">
-                                                    <img src={order.product_img || yaPlus} alt="" />
-                                                </div>
-                                                <div className="info-success__order__text">
-                                                    <h3 className="info-success__order__text__title">{order.product_name}</h3>
-                                                    <span className="info-success__order__text__key">
-                                                        Ключ товара: <strong>{order.order_key}</strong>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                )}
-                            </div>
-                        </div> */}
                         <div className="info-success order-success user">
                             <div className="info-success__title">Информация о пользователе</div>
                             <div className="info-success__order">

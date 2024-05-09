@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import BaseBtn from '../../Components/Base/BaseBtn/BaseBtn';
 import '../Favorite/Favorite.scss';
-import preload2 from '/preload2.gif';
 import GetEmailAvatar from '../../GetEmailAvatar';
 import { supabase } from '../../supabase';
 import { Link } from 'react-router-dom';
@@ -9,6 +8,7 @@ import { PATHS } from '../../../router';
 import EmptyFavourites from '/empty__favourites2.webp';
 import Empty from '../../Components/Empty/Empty';
 import OrderModal from '../../Components/OrderModal/OrderModal';
+import preload2 from '/preload2.gif';
 
 const Orders = () => {
     const [favorites, setFavorites] = useState([]);
@@ -19,36 +19,41 @@ const Orders = () => {
     const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const { data, error } = await supabase
-                    .from('orders')
-                    .select('*')
-                    .eq('user_email', userEmail)
-                    .order('created_at', { ascending: false });
-                if (error) {
-                    throw new Error('Ошибка при загрузке заказов');
-                }
-                const groupedData = data.reduce((acc, item) => {
-                    if (!acc[item.favorites_id]) {
-                        acc[item.favorites_id] = item;
-                    }
-                    return acc;
-                }, {});
-                const uniqueFavorites = Object.values(groupedData);
-                setFavorites(uniqueFavorites);
-            } catch (error) {
-                console.error('Ошибка:', error.message);
-                setError(error.message);
-            } finally {
-                setLoading(false);
-            }
-        };
+        fetchData();
+    }, [userEmail]); // Вызов fetchData только при изменении userEmail
 
-        if (userEmail) {
-            fetchData();
+    const fetchData = async () => {
+        if (!userEmail) {
+            setLoading(false); // Stop loading if user is not authenticated
+            return; // Проверка на наличие userEmail
         }
-    }, [userEmail]);
+
+        setLoading(true);
+        try {
+            const { data, error } = await supabase
+                .from('orders')
+                .select('*')
+                .eq('user_email', userEmail)
+                .order('created_at', { ascending: false });
+            if (error) {
+                throw new Error('Ошибка при загрузке заказов');
+            }
+            const groupedData = data.reduce((acc, item) => {
+                if (!acc[item.product_id]) {
+                    acc[item.product_id] = [];
+                }
+                acc[item.product_id].push(item);
+                return acc;
+            }, {});
+            const uniqueFavorites = Object.values(groupedData).flat();
+            setFavorites(uniqueFavorites);
+        } catch (error) {
+            console.error('Ошибка:', error.message);
+            setError(error.message);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const openModal = (orderKey) => {
         setSelectedOrderKey(orderKey);
@@ -63,11 +68,13 @@ const Orders = () => {
         <section className="favorite first-element">
             <div className="container">
                 <GetEmailAvatar setUserEmail={setUserEmail} />
-                {userEmail ? (
+                {loading ? (
+                    <div className="preload-wrapper" style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                        <img src={preload2} alt="" className="preload-img" />
+                    </div>
+                ) : userEmail ? (
                     <div>
-                        {loading ? (
-                            <img src={preload2} alt="" />
-                        ) : error ? (
+                        {error ? (
                             <p>Ошибка: {error}</p>
                         ) : favorites.length > 0 ? (
                             <>
@@ -85,27 +92,27 @@ const Orders = () => {
                                             <h3 className="favorite__item__title">{item.product_name}</h3>
                                             <span className="favorite__item__cost">{item.total_price}</span>
                                             <p className="favorite__item__desc"><strong>Ключ:</strong> {item.order_key} ₽</p>
-                                            <div onClick={() => openModal(item.order_key)} > 
-                                                <BaseBtn BtnText="Подробнее"  />
+                                            <div onClick={() => openModal(item.order_key)} >
+                                                <BaseBtn BtnText="Подробнее" />
                                             </div>
                                         </div>
                                     ))}
                                 </div>
                             </>
                         ) : (
-                            <Empty 
-                                url={PATHS.HOME} 
+                            <Empty
+                                url={PATHS.HOME}
                                 desc="Вы ещё ничего не"
                                 spanText="купили"
                                 btnText="За покупками!"
                             />
                         )}
                         {/* Render modal if modal is open */}
-                        {isModalOpen && <OrderModal onClose={closeModal} orderKey={selectedOrderKey}/>}
+                        {isModalOpen && <OrderModal onClose={closeModal} orderKey={selectedOrderKey} />}
                     </div>
                 ) : (
-                    <Empty 
-                        url={PATHS.LOGIN} 
+                    <Empty
+                        url={PATHS.LOGIN}
                         desc="Авторизуйтесь, чтобы увидеть"
                         spanText="купленные товары"
                         btnText="Авторизоваться"

@@ -8,14 +8,14 @@ import ProductAudioBook from './Product-audio-book/Product-audio-book'
 import ProductDigitalBook from './Product-digital-book/Product-digital-book'
 import ProductNew from './Product-new/Product-new'
 
-import { createClient } from '@supabase/supabase-js';
+// import { createClient } from '@supabase/supabase-js';
 
-const supabase = createClient(
-  'https://poprpfzqyzbmsbhtvvjw.supabase.co', 
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBvcHJwZnpxeXpibXNiaHR2dmp3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTE3MDYzMTEsImV4cCI6MjAyNzI4MjMxMX0.wMh3igzPTekhCkRSWyknGW2YEJII8JJH_8PvYnu3hXo' // API Key
-);
+// const supabase = createClient(
+//   'https://poprpfzqyzbmsbhtvvjw.supabase.co', 
+//   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBvcHJwZnpxeXpibXNiaHR2dmp3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTE3MDYzMTEsImV4cCI6MjAyNzI4MjMxMX0.wMh3igzPTekhCkRSWyknGW2YEJII8JJH_8PvYnu3hXo' // API Key
+// );
 
-
+import { supabase } from '../../supabase';
 
 function ProductNavButtons(props) {
   return (

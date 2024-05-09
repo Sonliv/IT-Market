@@ -4,10 +4,9 @@ import './Favorite.scss';
 import preload2 from '/preload2.gif';
 import GetEmailAvatar from '../../GetEmailAvatar';
 import { supabase } from '../../supabase';
-import { Link } from 'react-router-dom';
 import { PATHS } from '../../../router';
-import EmptyFavourites from '/empty__favourites2.webp'
 import Empty from '../../Components/Empty/Empty';
+import CreatePayment from '../../CreatePayment';
 
 const Favorite = () => {
     const [favorites, setFavorites] = useState([]);
@@ -21,8 +20,7 @@ const Favorite = () => {
                 const { data, error } = await supabase
                     .from('favorites')
                     .select('*')
-                    .order('created_at', { ascending: false })
-                    // .limit(15);
+                    .order('created_at', { ascending: false });
                 if (error) {
                     throw new Error('Ошибка при загрузке избранных');
                 }
@@ -47,46 +45,79 @@ const Favorite = () => {
         fetchData();
     }, []);
 
+    const { createPayment } = CreatePayment();
+
+    const handleBuyClick = async (favoritesId) => {
+        try {
+            // Получаем данные о товаре из таблицы productFilm по favorites_id
+            const { data, error } = await supabase
+                .from('productFilm')
+                .select('*')
+                .eq('id', favoritesId)
+                .single();
+
+            if (error) {
+                throw new Error('Ошибка при получении данных о товаре');
+            }
+
+            // Создаем платеж с полученными данными о товаре
+            createPayment(data);
+        } catch (error) {
+            console.error('Ошибка при создании платежа:', error.message);
+        }
+    };
+
     return (
         <section className="favorite first-element">
             <div className="container">
                 <GetEmailAvatar setUserEmail={setUserEmail} />
-                {userEmail ? (
+                {loading ? (
+                    <div className="preload-wrapper" style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                        <img src={preload2} alt="" className="preload-img" />
+                    </div>
+                ) : userEmail ? (
                     <div>
-                        {loading ? (
-                            <img src={preload2} alt="" />
-                        ) : error ? (
+                        {error ? (
                             <p>Ошибка: {error}</p>
-                        ) : (
+                        ) : favorites.length > 0 ? (
                             <>
-                            <h2 className="favorite__title">Избранное</h2>
-                              <div className="favorite__wrapper">
-                                {favorites.map((item) => (
-                                    <div key={item.id} className="favorite__item">
-                                        <div className="favorite__item__img__wrapper">
-                                            <img
-                                                src={item.favorites_img}
-                                                alt=""
-                                                className="favorite__item__img"
-                                            />
+                                <h2 className="favorite__title">Избранное</h2>
+                                <div className="favorite__wrapper">
+                                    {favorites.map((item) => (
+                                        <div key={item.id} className="favorite__item">
+                                            <div className="favorite__item__img__wrapper">
+                                                <img
+                                                    src={item.favorites_img}
+                                                    alt=""
+                                                    className="favorite__item__img"
+                                                />
+                                            </div>
+                                            <h3 className="favorite__item__title">{item.favorites_title}</h3>
+                                            <p className="favorite__item__desc">{item.favorites_desc}</p>
+                                            <span className="favorite__item__cost">{item.favorites_cost}</span>
+                                            <div onClick={() => handleBuyClick(item.favorites_id)}>
+                                                <BaseBtn BtnText="Купить" />
+                                            </div>
                                         </div>
-                                        <h3 className="favorite__item__title">{item.favorites_title}</h3>
-                                        <p className="favorite__item__desc">{item.favorites_desc}</p>
-                                        <span className="favorite__item__cost">{item.favorites_cost}</span>
-                                        <BaseBtn BtnText="Купить" />
-                                    </div>
-                                ))}
-                            </div>
+                                    ))}
+                                </div>
                             </>
+                        ) : (
+                            <Empty
+                                url={PATHS.HOME}
+                                desc="Вы ещё ничего не добавили в"
+                                spanText="избранное"
+                                btnText="За покупками!"
+                            />
                         )}
                     </div>
                 ) : (
-                    <Empty 
-                    url={PATHS.LOGIN} 
-                    desc="Авторизуйтесь, чтобы увидеть"
-                    spanText="избранное"
-                    btnText="Авторизоваться"
-                      />
+                    <Empty
+                        url={PATHS.LOGIN}
+                        desc="Авторизуйтесь, чтобы увидеть"
+                        spanText="избранное"
+                        btnText="Авторизоваться"
+                    />
                 )}
             </div>
         </section>
