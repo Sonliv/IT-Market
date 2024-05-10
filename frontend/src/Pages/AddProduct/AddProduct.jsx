@@ -35,15 +35,25 @@ const AddProduct = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+    
+        // Проверка на заполнение всех полей и загрузку изображения
         if (!productFilmTitle || !productFilmDesc || !productFilmCost || !productImageURL || !productFilmCategory || !productFilmKey) {
             setFormError(<p className="test">Произошла ошибка. Заполните все поля и добавьте изображение и ключ товара</p>);
             scrollToError();
             return;
         }
-
+    
+        // Проверка на валидность цены
+        const cost = parseFloat(productFilmCost);
+        if (isNaN(cost) || cost < 1 || cost > 100000) {
+            setFormError(<p className="test">Цена должна быть числом в диапазоне от 1 до 100000</p>);
+            scrollToError();
+            return;
+        }
+    
         submitForm();
     };
+    
 
     const scrollToError = () => {
         const errorElement = document.getElementById('form-error');

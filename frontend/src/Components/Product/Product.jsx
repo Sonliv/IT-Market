@@ -17,6 +17,7 @@ import ProductNew from './Product-new/Product-new'
 
 import { supabase } from '../../supabase';
 
+
 function ProductNavButtons(props) {
   return (
       <div className='product-nav-buttons'>

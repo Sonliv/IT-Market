@@ -91,7 +91,7 @@ const Orders = () => {
                                             </div>
                                             <h3 className="favorite__item__title">{item.product_name}</h3>
                                             <span className="favorite__item__cost">{item.total_price}</span>
-                                            <p className="favorite__item__desc"><strong>Ключ:</strong> {item.order_key} ₽</p>
+                                            <p className="favorite__item__desc">Ключ: <strong>{item.order_key}</strong></p>
                                             <div onClick={() => openModal(item.order_key)} >
                                                 <BaseBtn BtnText="Подробнее" />
                                             </div>

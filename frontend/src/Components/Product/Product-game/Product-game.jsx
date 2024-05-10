@@ -10,6 +10,7 @@ import preload2 from '/preload2.gif'
 import { useState, useEffect } from 'react'
 
 import CreatePayment from '../../../CreatePayment';
+import { Link } from 'react-router-dom';
 
 const ProductGame = ({ProductNavButtons, supabase}) => {
     let swiperInstance;
@@ -122,12 +123,14 @@ const ProductGame = ({ProductNavButtons, supabase}) => {
                         {productFilm.map((film, index) => (
                             <SwiperSlide key={index}>
                                 <div className="product-item">
+                                <Link to={`/product/${film.id}`} className="product-item-link" >
                                     <div className="product-item-img-wrapper">
                                         <img className="product-item-img" src={film.productImage} alt="" />
                                     </div>
                                     <h3 className="product-item-title">{film.productFilmTitle}</h3>
                                     <p className="product-item-desc">{film.product_film_desc}</p>
-                                    <p className="product-item-cost">{film.product_film_cost} Р</p>
+                                    <p className="product-item-cost">{film.product_film_cost} Р</p>  
+                                    </Link>
                                     <button onClick={() => createPayment({ ...film, product_film_key: film.product_film_key })} className="product-item-btn">Купить</button>
                                 </div>
                             </SwiperSlide>
