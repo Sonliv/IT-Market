@@ -23,27 +23,51 @@ const ProductNew = ({ProductNavButtons, supabase}) => {
     const { createPayment } = CreatePayment();   // оплата
     
   
+    // useEffect(() => {
+    //     const fetchProductFilm = async () => {
+    //         const { data, error } = await supabase
+    //           .from('productFilm')
+    //           .select('*')
+  
+    //         if (error) {
+    //             setFetchError('Ошибка, не получилось загрузить товары =(');
+    //             setProductFilm(null);
+    //             console.log(error);
+    //         }
+  
+    //         if (data) {
+    //             setProductFilm(data.sort((a,b) => b.id - a.id))
+    //             setFetchError(null);
+    //             setIsLoading(false); // Устанавливаем isLoading в false после загрузки данных
+    //         }
+    //     };
+  
+    //     fetchProductFilm();
+    // }, []);
+
     useEffect(() => {
-        const fetchProductFilm = async () => {
-            const { data, error } = await supabase
+      const fetchProductFilm = async () => {
+          const { data, error } = await supabase
               .from('productFilm')
-              .select('*')
+              .select('*');
   
-            if (error) {
-                setFetchError('Ошибка, не получилось загрузить товары =(');
-                setProductFilm(null);
-                console.log(error);
-            }
+          if (error) {
+              setFetchError('Ошибка, не получилось загрузить товары =(');
+              setProductFilm(null);
+              console.log(error);
+          }
   
-            if (data) {
-                setProductFilm(data.sort((a,b) => b.id - a.id))
-                setFetchError(null);
-                setIsLoading(false); // Устанавливаем isLoading в false после загрузки данных
-            }
-        };
+          if (data) {
+              const filteredData = data.filter(item => item.product_film_buyed !== 'buyed');
+              setProductFilm(filteredData.sort((a,b) => b.id - a.id));
+              setFetchError(null);
+              setIsLoading(false); // Устанавливаем isLoading в false после загрузки данных
+          }
+      };
   
-        fetchProductFilm();
-    }, []);
+      fetchProductFilm();
+  }, []);
+  
 
   
     return ( 

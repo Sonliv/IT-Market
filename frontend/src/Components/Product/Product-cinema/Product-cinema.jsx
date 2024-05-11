@@ -32,7 +32,9 @@ const ProductCinema = ({ProductNavButtons, supabase}) => {
             }
   
             if (data) {
-                setProductFilm(data);
+                const filteredData = data.filter(item => item.product_film_buyed !== 'buyed');
+                // setProductFilm(data);
+                setProductFilm(filteredData);
                 setFetchError(null);
                 setIsLoading(false); // Устанавливаем isLoading в false после загрузки данных
             }

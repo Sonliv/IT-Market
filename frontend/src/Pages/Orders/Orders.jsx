@@ -82,7 +82,7 @@ const Orders = () => {
                                 <div className="favorite__wrapper">
                                     {favorites.map((item) => (
                                         <div key={item.id} className="favorite__item">
-                                            <div className="favorite__item__img__wrapper">
+                                            {/* <div className="favorite__item__img__wrapper">
                                                 <img
                                                     src={item.product_img}
                                                     alt=""
@@ -91,7 +91,19 @@ const Orders = () => {
                                             </div>
                                             <h3 className="favorite__item__title">{item.product_name}</h3>
                                             <span className="favorite__item__cost">{item.total_price}</span>
-                                            <p className="favorite__item__desc">Ключ: <strong>{item.order_key}</strong></p>
+                                            <p className="favorite__item__desc">Ключ: <strong>{item.order_key}</strong></p> */}
+                                            <Link to={`/product/${item.product_id}`} className="product-item-link">
+                                                <div className="favorite__item__img__wrapper">
+                                                    <img
+                                                        src={item.product_img}
+                                                        alt=""
+                                                        className="favorite__item__img"
+                                                    />
+                                                </div>
+                                                <h3 className="favorite__item__title">{item.product_name}</h3>
+                                                <span className="favorite__item__cost">{item.total_price}</span>
+                                                <p className="favorite__item__desc">Ключ: <strong>{item.order_key}</strong></p>
+                                            </Link>
                                             <div onClick={() => openModal(item.order_key)} >
                                                 <BaseBtn BtnText="Подробнее" />
                                             </div>

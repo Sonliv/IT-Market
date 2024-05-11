@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import BaseBtn from '../../Components/Base/BaseBtn/BaseBtn';
 import './Favorite.scss';
 import GetEmailAvatar from '../../GetEmailAvatar';
@@ -33,28 +33,78 @@ const Favorite = () => {
         fetchData();
     }, [userEmail]);
 
+    // const fetchData = async () => {
+    //     if (!userEmail) {
+    //         setLoading(false);
+    //         return;
+    //     }
+
+    //     setLoading(true);
+    //     try {
+    //         const { data, error } = await supabase
+    //             .from('favorites')
+    //             .select('*')
+    //             .eq('favorites_email', userEmail)
+    //             .order('created_at', { ascending: false });
+    //         if (error) {
+    //             throw new Error('Ошибка при загрузке избранных');
+    //         }
+    //         const uniqueFavorites = data.reduce((acc, item) => {
+    //             if (!acc.find((fav) => fav.favorites_id === item.favorites_id)) {
+    //                 acc.push(item);
+    //             }
+    //             return acc;
+    //         }, []);
+    //         setFavorites(uniqueFavorites);
+    //     } catch (error) {
+    //         console.error('Ошибка:', error.message);
+    //         setError(error);
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // };
+
     const fetchData = async () => {
         if (!userEmail) {
             setLoading(false);
             return;
         }
-
+    
         setLoading(true);
         try {
-            const { data, error } = await supabase
+            const { data: favoritesData, error: favoritesError } = await supabase
                 .from('favorites')
                 .select('*')
                 .eq('favorites_email', userEmail)
                 .order('created_at', { ascending: false });
-            if (error) {
+    
+            if (favoritesError) {
                 throw new Error('Ошибка при загрузке избранных');
             }
-            const uniqueFavorites = data.reduce((acc, item) => {
-                if (!acc.find((fav) => fav.favorites_id === item.favorites_id)) {
+    
+            // Получаем массив избранных айдишников
+            const favoriteIds = favoritesData.map(item => item.favorites_id);
+    
+            // Получаем данные из таблицы productFilm, отфильтрованные по избранным айдишникам и условию product_film_buyed !== 'buyed'
+            const { data: productFilmData, error: productFilmError } = await supabase
+                .from('productFilm')
+                .select('*')
+                .in('id', favoriteIds)
+                .not('product_film_buyed', 'eq', 'buyed');
+    
+            if (productFilmError) {
+                throw new Error('Ошибка при загрузке данных о фильмах');
+            }
+    
+            // Фильтруем уникальные избранные элементы исключая те, у которых product_film_buyed === 'buyed'
+            const uniqueFavorites = favoritesData.reduce((acc, item) => {
+                const foundProduct = productFilmData.find(product => product.id === item.favorites_id);
+                if (foundProduct) {
                     acc.push(item);
                 }
                 return acc;
             }, []);
+    
             setFavorites(uniqueFavorites);
         } catch (error) {
             console.error('Ошибка:', error.message);
@@ -63,6 +113,7 @@ const Favorite = () => {
             setLoading(false);
         }
     };
+    
 
     const handleBuyClick = async (favoritesId) => {
         try {
