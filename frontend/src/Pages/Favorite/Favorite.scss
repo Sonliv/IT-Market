@@ -95,20 +95,29 @@
 }
 
 
-.ofdf {
+.favorite__buttons__wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    & div {
+        width: 80%;
+    }
+
+    & img {
+        width: 14%;
+        cursor: pointer;
+    }
 }
 
-.ofdf div {
-    width: 80%;
-}
+// .ofdf div {
+//     width: 80%;
+// }
 
-.ofdf img {
-    width: 14%;
-    cursor: pointer;
-}
+// .ofdf img {
+//     width: 14%;
+//     cursor: pointer;
+// }
 
 
 

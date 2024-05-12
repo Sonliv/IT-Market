@@ -33,6 +33,7 @@ const Favorite = () => {
         fetchData();
     }, [userEmail]);
 
+
     // const fetchData = async () => {
     //     if (!userEmail) {
     //         setLoading(false);
@@ -72,40 +73,33 @@ const Favorite = () => {
     
         setLoading(true);
         try {
-            const { data: favoritesData, error: favoritesError } = await supabase
+            const { data: favoritesData, error } = await supabase
                 .from('favorites')
                 .select('*')
                 .eq('favorites_email', userEmail)
                 .order('created_at', { ascending: false });
     
-            if (favoritesError) {
+            if (error) {
                 throw new Error('Ошибка при загрузке избранных');
             }
     
-            // Получаем массив избранных айдишников
-            const favoriteIds = favoritesData.map(item => item.favorites_id);
+            const favoriteIds = favoritesData.map(favorite => favorite.favorites_id);
     
-            // Получаем данные из таблицы productFilm, отфильтрованные по избранным айдишникам и условию product_film_buyed !== 'buyed'
             const { data: productFilmData, error: productFilmError } = await supabase
                 .from('productFilm')
                 .select('*')
-                .in('id', favoriteIds)
-                .not('product_film_buyed', 'eq', 'buyed');
+                .in('id', favoriteIds);
     
             if (productFilmError) {
                 throw new Error('Ошибка при загрузке данных о фильмах');
             }
     
-            // Фильтруем уникальные избранные элементы исключая те, у которых product_film_buyed === 'buyed'
-            const uniqueFavorites = favoritesData.reduce((acc, item) => {
-                const foundProduct = productFilmData.find(product => product.id === item.favorites_id);
-                if (foundProduct) {
-                    acc.push(item);
-                }
-                return acc;
-            }, []);
+            const filteredFavorites = favoritesData.filter(favorite => {
+                const associatedProduct = productFilmData.find(product => product.id === favorite.favorites_id);
+                return associatedProduct && associatedProduct.product_film_buyed !== 'buyed';
+            });
     
-            setFavorites(uniqueFavorites);
+            setFavorites(filteredFavorites);
         } catch (error) {
             console.error('Ошибка:', error.message);
             setError(error);
@@ -113,6 +107,10 @@ const Favorite = () => {
             setLoading(false);
         }
     };
+    
+
+    
+    
     
 
     const handleBuyClick = async (favoritesId) => {
@@ -201,7 +199,7 @@ const Favorite = () => {
                                                         <p className="favorite__item__desc">{item.favorites_desc}</p>
                                                         <span className="favorite__item__cost">{item.favorites_cost} ₽</span>
                                                     </Link>
-                                                    <div className='ofdf'>
+                                                    <div className='favorite__buttons__wrapper'>
                                                         <div onClick={() => handleBuyClick(item.favorites_id)}>
                                                             <BaseBtn BtnText="Купить" />
                                                         </div>

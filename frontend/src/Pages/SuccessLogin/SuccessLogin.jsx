@@ -121,6 +121,7 @@ const SuccessLogin = () => {
                             <div className="info-success__order">
                                 <div className="info-success__order__img">
                                     <img src={!userImage ? userImg : userImage} alt="" />
+                                    {console.log(userImage)}
                                 </div>
                                 <div className="info-success__order__text">
                                     <h3 className="info-success__order__text__title">{userEmail}</h3>
@@ -128,7 +129,9 @@ const SuccessLogin = () => {
                                          <Link to={PATHS.ADDPRODUCT}>
                                             <BaseBtn BtnText="Добавить товар" />
                                         </Link>
-                                        <BaseBtn BtnText="Мои товары" />
+                                        <Link to={PATHS.SELLER} >  
+                                            <BaseBtn BtnText="Мои товары" />
+                                        </Link>
                                     </div>
                                 </div>
                             </div>

@@ -4,7 +4,7 @@ import './AddProduct.scss';
 import { useNavigate } from 'react-router-dom';
 import { PATHS } from '../../../router';
 import { supabase } from '../../supabase';
-import GetEmailAvatar from '../../GetEmailAvatar';
+
 
 const AddProduct = () => {
     const navigate = useNavigate();
@@ -19,6 +19,22 @@ const AddProduct = () => {
     const [isUploading, setIsUploading] = useState(false);
     const [sellerEmail, setSellerEmail] = useState('');
     const [sellerAvatar, setSellerAvatar] = useState('');
+
+    useEffect(() => {
+        const getUserAvatar = () => {
+            supabase.auth.onAuthStateChange((event, session) => {
+                if (session) {
+                    setSellerAvatar(session.user.user_metadata.avatar_url);
+                } else {
+                    setSellerAvatar('');
+                }
+            });
+        };
+        getUserAvatar();
+    }, []);
+    
+
+
 
     useEffect(() => {
         const getUserEmail = () => {

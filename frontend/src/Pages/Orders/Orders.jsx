@@ -5,10 +5,11 @@ import GetEmailAvatar from '../../GetEmailAvatar';
 import { supabase } from '../../supabase';
 import { Link } from 'react-router-dom';
 import { PATHS } from '../../../router';
-import EmptyFavourites from '/empty__favourites2.webp';
+// import EmptyFavourites from '/empty__favourites2.webp';
 import Empty from '../../Components/Empty/Empty';
 import OrderModal from '../../Components/OrderModal/OrderModal';
 import preload2 from '/preload2.gif';
+
 
 const Orders = () => {
     const [favorites, setFavorites] = useState([]);
