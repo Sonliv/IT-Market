@@ -13,23 +13,30 @@ const Seller = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [userEmail, setUserEmail] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedProductId, setSelectedProductId] = useState(null);
 
     useEffect(() => {
-        fetchData();
+
+
+    fetchData();
     }, [userEmail]);
+
+    
 
     const fetchData = async () => {
         if (!userEmail) {
             setLoading(false);
             return;
         }
-
+    
         setLoading(true);
         try {
             const { data, error } = await supabase
                 .from('productFilm')
                 .select('id, product_film_desc, product_film_cost, productFilmTitle, productImage')
-                .eq('product_film_seller_email', userEmail);
+                .eq('product_film_seller_email', userEmail)
+                .is('product_film_buyed', null); // изменение здесь
             if (error) {
                 throw new Error('Ошибка при загрузке товаров продавца');
             }
@@ -41,6 +48,42 @@ const Seller = () => {
             setLoading(false);
         }
     };
+    
+    
+    const openModal = (productId) => {
+        setSelectedProductId(productId);
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleDeleteProduct = async () => {
+        try {
+            const { data, error } = await supabase
+                .from('productFilm')
+                .upsert([{ product_film_buyed: 'buyed', id: selectedProductId }], { onConflict: ['id'] });
+            if (error) {
+                throw new Error('Ошибка при добавлении или обновлении товара');
+            }
+            console.log('Товар успешно добавлен или обновлен');
+        } catch (error) {
+            console.error('Ошибка при добавлении или обновлении товара:', error.message);
+        } finally {
+            closeModal(); // Закрыть модальное окно после добавления или обновления товара
+        }
+    };
+    
+    
+
+    const handleOverlayClick = (event) => {
+        if (event.target.classList.contains("modal-overlay__favorite")) {
+            closeModal();
+        }
+    };
+
+    
 
     return (
         <section className='seller first-element'>
@@ -58,7 +101,9 @@ const Seller = () => {
                             <>
                                 <h2 className="favorite__title">Ваши товары</h2>
                                 <div className="favorite__wrapper">
-                                    {products.map((product) => (
+                                {products
+                                    .filter(product => product.product_film_buyed !== 'buyed')
+                                    .map((product) => (
                                         <div key={product.id} className="favorite__item">
                                             <Link to={`/product/${product.id}`} className="product-item-link">
                                                 <div className="favorite__item__img__wrapper">
@@ -69,22 +114,25 @@ const Seller = () => {
                                                     />
                                                 </div>
                                                 <h3 className="favorite__item__title">{product.productFilmTitle}</h3>
-                                                <span className="favorite__item__cost">{product.product_film_cost}</span>
+                                                <span className="favorite__item__cost">{product.product_film_cost} ₽</span>
                                                 <p className="favorite__item__desc">{product.product_film_desc}</p>
                                             </Link>
                                             <div className='favorite__buttons__wrapper'>
                                                 <div>
-                                                <Link to={`/Seller/:${product.id}`}  >
-                                                    <BaseBtn BtnText="Редактировать" />
-                                                </Link>
+                                                    <Link to={`/Seller/:${product.id}`}>
+                                                        <BaseBtn BtnText="Редактировать" />
+                                                    </Link>
                                                 </div>
                                                 <img
                                                     src={Garbage}
                                                     alt=""
+                                                    className='delete'
+                                                    onClick={() => openModal(product.id)} 
                                                 />
                                             </div>
                                         </div>
                                     ))}
+
                                 </div>
                             </>
                         ) : (
@@ -105,6 +153,24 @@ const Seller = () => {
                     />
                 )}
             </div>
+            {isModalOpen && (
+                <div className="modal-overlay__favorite" onClick={handleOverlayClick}>
+                    <div className="modal__favorite">
+                        <span className="modal-close__favorite" onClick={closeModal}>×</span>
+                        <h3>Вы уверены?</h3>
+                        <p>Товар будет удален из списка ваших товаров</p>
+                        <div className="modal-buttons__favorite">
+                        <div onClick={handleDeleteProduct} className='red__button__favorite'>
+                            <BaseBtn BtnText="Да" />
+                        </div>
+
+                            <div onClick={closeModal} className='close__btn__modal'>
+                                <BaseBtn BtnText="Нет" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </section>
     );
 };
