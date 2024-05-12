@@ -27,23 +27,24 @@ export const PATHS = {
     DIGITAL: '/DigitalBookCategory',
     DETAILS: '/product/:productId',
     SELLER: '/Seller',
-    EDIT: './Seller/edit:productId'
+    SELLER_EDIT: '/Seller/:productId',
 }
 
-export const router = () =>(
+
+export const router = () => (
     <Routes>
-        <Route path={PATHS.HOME} element={<MainPage/>}/>
-        <Route path={PATHS.LOGIN} element={<LoginPage/>}/>
-        <Route path={PATHS.SUCCESS} element={<SuccessLogin/>}/>
-        <Route path={PATHS.ADDPRODUCT} element={<AddProduct/>}/>
-        <Route path={PATHS.ORDERS} element={<Orders/>}/>
-        <Route path={PATHS.FAVORITE} element={<Favorite/>}/>
-        <Route path={PATHS.FILM} element={<FilmCategory/>}/>
-        <Route path={PATHS.GAME} element={<GameCategory/>}/>
-        <Route path={PATHS.AUDIO} element={<AudioBookCategory/>}/>
-        <Route path={PATHS.DIGITAL} element={<DigitalBookCategory/>}/>
-        <Route path={PATHS.DETAILS} element={<ProductDetailsPage />} />
-        <Route path={PATHS.SELLER} element={<Seller/>}/>
-        <Route path={PATHS.EDIT} element={<SellerEdit/>}/>
+            <Route path={PATHS.HOME} element={<MainPage/>}/>
+            <Route path={PATHS.LOGIN} element={<LoginPage/>}/>
+            <Route path={PATHS.SUCCESS} element={<SuccessLogin/>}/>
+            <Route path={PATHS.ADDPRODUCT} element={<AddProduct/>}/>
+            <Route path={PATHS.ORDERS} element={<Orders/>}/>
+            <Route path={PATHS.FAVORITE} element={<Favorite/>}/>
+            <Route path={PATHS.FILM} element={<FilmCategory/>}/>
+            <Route path={PATHS.GAME} element={<GameCategory/>}/>
+            <Route path={PATHS.AUDIO} element={<AudioBookCategory/>}/>
+            <Route path={PATHS.DIGITAL} element={<DigitalBookCategory/>}/>
+            <Route path={PATHS.DETAILS} element={<ProductDetailsPage />} />
+            <Route path={PATHS.SELLER} element={<Seller/>} />
+            <Route path={PATHS.SELLER_EDIT} element={<SellerEdit/>} />
     </Routes>
 )

@@ -74,7 +74,9 @@ const Seller = () => {
                                             </Link>
                                             <div className='favorite__buttons__wrapper'>
                                                 <div>
+                                                <Link to={`/Seller/:${product.id}`}  >
                                                     <BaseBtn BtnText="Редактировать" />
+                                                </Link>
                                                 </div>
                                                 <img
                                                     src={Garbage}
