@@ -43,7 +43,6 @@
         width: 100%;
         cursor: pointer;
         height: 372px;
-        //.
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -72,7 +71,7 @@
         &-title{
             margin-bottom: 5px;
             display: -webkit-box; /* Устанавливаем блочный контейнер, который может быть ограничен по высоте */
-            -webkit-line-clamp: 2; /* Ограничиваем текст до двух строк */
+            -webkit-line-clamp: 1; /* Ограничиваем текст до двух строк */
             -webkit-box-orient: vertical; /* Ориентируем текст вертикально */
             overflow: hidden; /* Скрываем содержимое, выходящее за пределы контейнера */
         }

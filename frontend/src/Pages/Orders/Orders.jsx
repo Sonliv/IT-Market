@@ -9,6 +9,7 @@ import { PATHS } from '../../../router';
 import Empty from '../../Components/Empty/Empty';
 import OrderModal from '../../Components/OrderModal/OrderModal';
 import preload2 from '/preload2.gif';
+import './Orders.scss';
 
 
 const Orders = () => {
@@ -101,8 +102,8 @@ const Orders = () => {
                                                         className="favorite__item__img"
                                                     />
                                                 </div>
-                                                <h3 className="favorite__item__title">{item.product_name}</h3>
-                                                <span className="favorite__item__cost">{item.total_price}</span>
+                                                <h3 className="favorite__item__title order__cost">{item.product_name}</h3>
+                                                <span className="favorite__item__cost order__cost">{item.total_price} ₽</span>
                                                 <p className="favorite__item__desc">Ключ: <strong>{item.order_key}</strong></p>
                                             </Link>
                                             <div onClick={() => openModal(item.order_key)} >

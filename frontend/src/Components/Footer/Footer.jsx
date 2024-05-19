@@ -9,7 +9,8 @@ const Footer = () => {
                     <div className="footer-logo">
                         <Logo/>
                     </div>
-                    <button className="footer-about">Подробнее о Маркетплейсе</button>
+                    {/* <button className="footer-about">ITMarket@gmail.com</button> */}
+                    <a href="mailto:ITMarket@gmail.com" className="footer-about">ITMarket@gmail.com</a>
                 </div>
             </div>
         </footer>
