@@ -1,17 +1,15 @@
 import preload2 from '/preload2.gif';
 import { useEffect, useState } from 'react';
-import { createClient } from '@supabase/supabase-js';
 import BaseBtn from '../Base/BaseBtn/BaseBtn';
-
-const supabase = createClient(
-    'https://poprpfzqyzbmsbhtvvjw.supabase.co', 
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBvcHJwZnpxeXpibXNiaHR2dmp3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTE3MDYzMTEsImV4cCI6MjAyNzI4MjMxMX0.wMh3igzPTekhCkRSWyknGW2YEJII8JJH_8PvYnu3hXo' 
-);
+import { Link } from 'react-router-dom';
+import { supabase } from '../../supabase';
+import CreatePayment from '../../CreatePayment';
 
 const CategoryTemplate = (props) => {
     const [productFilm, setProductFilm] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const { createPayment } = CreatePayment();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -19,7 +17,7 @@ const CategoryTemplate = (props) => {
                 const { data, error } = await supabase
                     .from('productFilm')
                     .select('*')
-                    .eq('product_film_category', props.CategoryPage) // Фильтруем только по категории "Кино"
+                    .eq('product_film_category', props.CategoryPage) // Фильтруем только по категории 
                     .order('created_at', { ascending: false });
                 if (error) {
                     throw new Error('Ошибка при загрузке избранных');
@@ -45,6 +43,7 @@ const CategoryTemplate = (props) => {
         fetchData();
     }, []);
 
+
     return (
         <section className="favorite first-element">
             <div className="container">
@@ -57,18 +56,35 @@ const CategoryTemplate = (props) => {
                     <div className="favorite__wrapper">
                         {productFilm.map((item) => (
                             <div key={item.id} className="favorite__item">
-                                <div className="favorite__item__img__wrapper">
-                                    <img
-                                        src={item.productImage}
-                                        alt=""
-                                        className="favorite__item__img"
-                                    />
+                                <Link to={`/product/${item.id}`} key={item.id}>
+                                    <div className="favorite__item__img__wrapper">
+                                        <img
+                                            src={item.productImage}
+                                            alt=""
+                                            className="favorite__item__img"
+                                        />
+                                    </div>
+                                    <h3 className="favorite__item__title">{item.productFilmTitle}</h3>
+                                    <p className="favorite__item__desc">{item.product_film_desc}</p>
+                                    <span className="favorite__item__cost">{item.product_film_cost}</span>
+                                </Link>
+                                    <div onClick={() => createPayment({ ...item, product_film_key: item.product_film_key })}>
+                                         <BaseBtn BtnText="Купить" />
+                                    </div>
                                 </div>
-                                <h3 className="favorite__item__title">{item.productFilmTitle}</h3>
-                                <p className="favorite__item__desc">{item.product_film_desc}</p>
-                                <span className="favorite__item__cost">{item.product_film_cost}</span>
-                                <BaseBtn BtnText="Купить" />
-                            </div>
+                            // <div key={item.id} className="favorite__item">
+                            //     <div className="favorite__item__img__wrapper">
+                            //         <img
+                            //             src={item.productImage}
+                            //             alt=""
+                            //             className="favorite__item__img"
+                            //         />
+                            //     </div>
+                            //     <h3 className="favorite__item__title">{item.productFilmTitle}</h3>
+                            //     <p className="favorite__item__desc">{item.product_film_desc}</p>
+                            //     <span className="favorite__item__cost">{item.product_film_cost}</span>
+                            //     <BaseBtn BtnText="Купить" />
+                            // </div>
                         ))}
                     </div>
                 )}

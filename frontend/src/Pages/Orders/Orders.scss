@@ -13,6 +13,7 @@
     }
 }
 
+
 .info-success.orders{
     max-height: 200px;
     width: 100%;
@@ -66,4 +67,9 @@
 
 .favorite__item__title.order__cost{
     margin-bottom: 10px;
+}
+
+
+.favorite__item__desc.stroke__fix{
+    -webkit-line-clamp: 1;
 }
