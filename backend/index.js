@@ -5,9 +5,14 @@ const { createClient } = require('@supabase/supabase-js');
 const { v4: uuidv4 } = require('uuid');
 const fs = require('fs').promises;
 const path = require('path');
+const bodyParser = require('body-parser'); // Импорт модуля body-parser
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 // Инициализация клиента Supabase
 const supabase = createClient(
